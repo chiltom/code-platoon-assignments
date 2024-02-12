@@ -2,7 +2,7 @@
 
 A repository containing all of the individual assignments I complete in Code Platoon
 
-# Week 1 - Intro to JS, Node, Jest, Python, Pytest
+## Week 1 - Intro to JS, Node, Jest, Python, Pytest
 
 - 99-bottles-py
 - anagrams-i
@@ -23,7 +23,7 @@ A repository containing all of the individual assignments I complete in Code Pla
 - intro-to-pytest
 - terminal-phone-brogrammers
 
-# Week 2 - OOP
+## Week 2 - OOP
 - app-users-i
 - app-users-ii
 - app-users-iii 
