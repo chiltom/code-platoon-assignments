@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "jest": "^29.7.0"
+  },
+  "name": "js",
+  "version": "1.0.0",
+  "main": "creditCheck.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "node creditCheck.js",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

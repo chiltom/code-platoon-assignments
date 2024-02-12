@@ -1,0 +1,17 @@
+{
+  "name": "algo-sum-pairs",
+  "version": "1.0.0",
+  "main": "sumPairs.js",
+  "scripts": {
+    "start": "node sumPairs.js",
+    "test": "jest"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^29.7.0"
+  },
+  "devDependencies": {},
+  "author": "",
+  "description": ""
+}
