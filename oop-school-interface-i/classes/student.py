@@ -14,9 +14,9 @@ class Student(Person):
         
     # Class method to get all students from csv file and add them to all students list
     @classmethod
-    def all_students(cls, path_to_file):
+    def all_students(cls):
         
-        with open(path_to_file, mode = 'r', newline = '') as csvfile:
+        with open("./data/students.csv", mode = 'r', newline = '') as csvfile:
             student_data_reader = csv.DictReader(csvfile)
             for student_data in student_data_reader:
                 a_student = Student(**student_data)
@@ -28,6 +28,9 @@ class Student(Person):
         super().__init__(name, age, role)
         self._school_id = int(school_id)
         self._password = password
+        
+    def __str__(self) -> str:
+        return repr(self)
     
     def __repr__(self):
         return f"{super().__repr__()} | School ID: {self._school_id} | Password: {self._password}"

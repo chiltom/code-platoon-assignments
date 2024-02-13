@@ -5,5 +5,8 @@ class Person:
         self._age = int(age) #TODO: Handle casting error if age invalid
         self._role = role 
     
+    def __str__(self) -> str:
+        return repr(self)
+    
     def __repr__(self) -> str:
         return f"Name: {self._name} | Age: {self._age} | Role: {self._role}"

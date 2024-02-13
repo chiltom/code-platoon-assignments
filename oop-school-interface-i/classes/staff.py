@@ -14,9 +14,9 @@ class Staff(Person):
     
     # Class method to get all staff from csv file and add them to all staff list
     @classmethod
-    def all_staff(cls, path_to_file):
+    def all_staff(cls):
         
-        with open(path_to_file, mode = 'r', newline = '') as csvfile:
+        with open("./data/staff.csv", mode = 'r', newline = '') as csvfile:
             staff_data_reader = csv.DictReader(csvfile)
             for staff_data in staff_data_reader:
                 a_staff = Staff(**staff_data)
@@ -28,6 +28,9 @@ class Staff(Person):
         super().__init__(name, age, role)
         self._employee_id = int(employee_id)
         self._password = password
+        
+    def __str__(self):
+        return repr(self)
     
     def __repr__(self):
         return f"{super().__repr__()} | Employee ID: {self._employee_id} | Password: {self._password}"
