@@ -18,34 +18,39 @@ class BoggleBoard:
     ['AFFKPS'],
     ['HLNNRZ'],
     ['DEILRX']]
-  # need a argument of letters that is default a list of all letters capitalized
+    
   def __init__(self) -> None:
-    self._board = []
-    for _ in range(4):
-      self._board.append(['_', '_', '_', '_'])
+    self._board = ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_', '_', '_', '_', '_', '_', '_']
   
   @property
   def get_board(self) -> list:
     return self._board
   
   def print_board(self) -> None:
-    for row in self.get_board:
-      print(f'{" ".join(row)}')
-    #nested loop to access the sub-list items
-    #randomly select a letter from ALPHA_LIST and change the underscore to it
-      
-    # prints a random value from the list
-    #list1 = [1, 2, 3, 4, 5, 6]
-    #print(random.choice(list1))
-      
+    print(f"{self.get_board[:4]}")
+    print(f"{self.get_board[4:8]}")
+    print(f"{self.get_board[8:12]}")
+    print(f"{self.get_board[12:]}")
+          
   def shake(self) -> None:
-    #set this to numbered list from 0-15
     roll_possibilities = BoggleBoard.ROLL_POSSIBILITIES.copy()
-    for row in self.get_board:
-      for index in range(len(row)):
-        outer_list = random.choice(roll_possibilities)
-        inner_index = random.randint(0, 5)
-        row[index] = outer_list[0][inner_index]
-        roll_possibilities.pop(roll_possibilities.index(outer_list))
+    for index in range(len(self.get_board)):
+      outer_poss_list = random.choice(roll_possibilities)
+      inner_poss_index = random.randint(0, 5)
+      self._board[index] = outer_poss_list[0][inner_poss_index]
+      roll_possibilities.pop(roll_possibilities.index(outer_poss_list))
     self.print_board()
 
+  def include_word(self, word) -> bool:
+    # loop through list and grab index and char
+        # if char matches word[0]
+          # compare to letters to left and right, up and down, and diagonals
+    for index, char in enumerate(self.get_board):
+      if char == word[0] and index == 0:
+        pass
+    
+    pass
+
+
+board = BoggleBoard()
+board.shake()
