@@ -14,6 +14,11 @@ class Student:
             return cls.all_students[student_id_str]
         else:
             print(f"Student ID {student_id_str} does not exist.")
+            
+    @classmethod
+    def add_student(cls, dict) -> None:
+        instance = cls(**dict)
+        cls.all_students[instance._school_id] = instance
         
     def __init__(self, name=None, age=None, role=None, school_id=None, password=None) -> None:
         self._name = name

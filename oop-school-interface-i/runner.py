@@ -3,6 +3,4 @@ from classes.student import Student
 
 school = School('Ridgemont High') 
 
-print(school._name)
-print(school._staff)
-print(school._students)
+school.manage_school()

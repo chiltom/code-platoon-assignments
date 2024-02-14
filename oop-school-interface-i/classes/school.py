@@ -41,7 +41,7 @@ class School:
             else:
                 valid_input = True
                 return user_input
-
+    
     @classmethod
     def manage_school(cls) -> None:
         
@@ -58,8 +58,17 @@ class School:
                     student = Student.find_student_by_id(student_id)
                     print(student)
                 case 3:
-                    pass
+                    student_data = {'role': 'student'}
+                    student_data['name'] = input("Enter student name: ")
+                    student_data['age'] = input("Enter student age: ")
+                    student_data['school_id'] = input("Enter school ID: ")
+                    student_data['password'] = input("Enter student password: ")
+                    
+                    Student.add_student(student_data)
                 case 4:
-                    pass
+                    school_id = input("Enter the students school ID: ")
+                    print(f"Student: {Student.all_students[school_id]._name} being deleted from school records.")
+                    Student.all_students.pop(school_id)
                 case 5:
+                    print("Thank you for working with us!")
                     break
