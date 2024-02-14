@@ -1,37 +1,35 @@
-from .person import Person
-import csv
-
-class Student(Person):
-    all_students_list = []
+class Student:
+    all_students = {}
     
+    @classmethod    
+    def list_students(cls) -> None:
+        counter = 0
+        for school_id in cls.all_students:
+            counter += 1
+            print(f"{counter}. {cls.all_students[school_id]._name} {school_id}")
+            
     @classmethod
-    def get_student_by_id(cls, id):
-        for student in cls.all_students_list:
-            if id == student._school_id:
-                return student
-            else:
-                return None
+    def find_student_by_id(cls, student_id_str):
+        if student_id_str in cls.all_students:
+            return cls.all_students[student_id_str]
+        else:
+            print(f"Student ID {student_id_str} does not exist.")
         
-    # Class method to get all students from csv file and add them to all students list
-    @classmethod
-    def all_students(cls):
-        
-        with open("./data/students.csv", mode = 'r', newline = '') as csvfile:
-            student_data_reader = csv.DictReader(csvfile)
-            for student_data in student_data_reader:
-                a_student = Student(**student_data)
-                cls.all_students_list.append(a_student)
-        
-        return cls.all_students_list
-    
-    def __init__(self, name=None, age=None, role=None, school_id=None, password=None):
-        super().__init__(name, age, role)
-        self._school_id = int(school_id)
+    def __init__(self, name=None, age=None, role=None, school_id=None, password=None) -> None:
+        self._name = name
+        self._age = age
         self._password = password
-        
-    def __str__(self) -> str:
-        return repr(self)
+        self._role = role
+        self._school_id = school_id
     
-    def __repr__(self):
-        return f"{super().__repr__()} | School ID: {self._school_id} | Password: {self._password}"
+    def __str__(self) -> str:
+        return f"{self._name.capitalize()}\n------------------\nAge: {self._age}\nID: {self._school_id}"
+    
+    # def __repr__(self) -> str:
+    #     return str(self)
+    
+    @property
+    def get_id(self) -> int:
+        return int(self._school_id)
+    
     
