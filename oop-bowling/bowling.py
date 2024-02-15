@@ -60,7 +60,28 @@ class Game:
             # If roll_one is a strike, set strike to True but continue rolling
             if roll_one == 10:
                 strike = True
-            # Account for if first roll was a strike or not
+            # Account for if first roll was a strike or not and play second roll
+            roll_two = None
+            if strike == True:
+                roll_two = random.randint(1, 10)
+            else:
+                roll_two = random.randint(1, 10 - roll_one)
+            # Account for if previous frame was strike or spare
+            if player.get_frames[self._frames - 1].is_strike == True:
+                player.get_frames[self._frames - 1].add_score(roll_one + roll_two)
+            elif player.get_frames[self._frames - 1].is_spare == True:
+                player.get_frames[self._frames - 1].add_score(roll_one)
+            # Play third roll and account for prior pin counts
+            roll_three = None
+            if roll_one + roll_two >= 10 and strike == False:
+                spare = True
+                roll_three = random.randint(1, 10)
+            elif strike == True and roll_two < 10:
+                roll_three = random.randint(1, 10 - roll_two)
+            elif strike == False and roll_one + roll_two < 10:
+                roll_three = random.randint(1, 10 - (roll_one + roll_two))
+            
+                
             
         
                 
