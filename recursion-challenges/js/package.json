@@ -1,0 +1,13 @@
+{
+  "name": "js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "recursionChallenge.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node recursionChallenge.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module"
+}
