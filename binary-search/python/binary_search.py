@@ -10,3 +10,4 @@ def binary_search(tgt, lst):
         else:
             left = mid + 1
     return -1
+
