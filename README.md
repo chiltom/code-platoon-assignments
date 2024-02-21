@@ -35,3 +35,10 @@ A repository containing all of the individual assignments I complete in Code Pla
 - student-registry
 - vehicle-shop
 - zoo
+
+## Week 3 - Basic Data Structures and Algorithms
+- binary-search
+- ds-linear-vs-binary-search
+- recursion-challenges
+- recursive-loop
+- smallest-node
