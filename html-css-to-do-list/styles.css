@@ -1,18 +1,51 @@
+body {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px 0px 10px;
+    background-color: rgb(130, 128, 129);
+}
+
 header {
-    padding: 10px 0px 10px 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0px 10px 40px;
+    background-color: rgb(226, 193, 151);
+}
+
+h1, h3 {
+    margin-bottom: 0px;
+}
+
+em {
+    font-weight: 400;
+}
+
+.container {
+    display: flex;
+    padding: 10px 10px 10px 10px;
+    margin-bottom: 20px;
 }
 
 .tasks {
     display: flex;
     flex-direction: column;
-    padding-left: 10px;
+    margin: 0px 40px 0px 40px;
+}
+
+.taskList {
+    padding: 0px 0px 10px 20px;
+}
+
+li:active {
+    text-decoration: line-through;
 }
 
 .inputs {
     display: flex;
 }
 
-#taskList {
-    padding: 0px 0px 10px 30px;
+#addTask, #submitTask {
+    margin-left: 5px;
 }
+
 
