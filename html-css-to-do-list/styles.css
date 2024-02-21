@@ -1,0 +1,18 @@
+header {
+    padding: 10px 0px 10px 20px;
+}
+
+.tasks {
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+}
+
+.inputs {
+    display: flex;
+}
+
+#taskList {
+    padding: 0px 0px 10px 30px;
+}
+
