@@ -12,7 +12,7 @@ header {
     background-color: rgb(226, 193, 151);
 }
 
-h1, h3 {
+h1, h2 {
     margin-bottom: 0px;
 }
 
@@ -20,28 +20,29 @@ em {
     font-weight: 400;
 }
 
+li {
+    font-size: large;
+}
+
 .container {
     display: flex;
     padding: 10px 10px 10px 10px;
-    margin-bottom: 20px;
+    justify-content:space-evenly;
 }
 
 .tasks {
     display: flex;
     flex-direction: column;
-    margin: 0px 40px 0px 40px;
 }
 
-.taskList {
-    padding: 0px 0px 10px 20px;
-}
-
-li:active {
+.checkWithLabel:checked ~ .labelForCheck {
     text-decoration: line-through;
 }
 
 .inputs {
     display: flex;
+    justify-content: center;
+    margin-top: 10px;
 }
 
 #addTask, #submitTask {

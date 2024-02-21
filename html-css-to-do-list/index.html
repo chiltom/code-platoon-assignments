@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./styles.css"/>
+    <script src="./scripts.js"></script>
     <title>To-Do List</title>
 </head>
 <body>
@@ -13,28 +14,19 @@
     </header>
     <div class="container">
         <div class="tasks">
-            <h3><u>Not Started</u></h3>    
-            <ul class="taskList">
-                <li>Task 1</li>
-                <li>Task 2</li>
-                <li>Task 3</li>
-            </ul>
-        </div>
-        <div class="tasks">
-            <h3><u>In Work</u></h3>
-            <ul class="taskList">
-                <li>Task 1</li>
-                <li>Task 2</li>
-                <li>Task 3</li>
-            </ul>
-        </div>
-        <div class="tasks">
-            <h3><u>Completed</u></h3>
-            <ul class="taskList">
-                <li>Task 1</li>
-                <li>Task 2</li>
-                <li>Task 3</li>
-            </ul>
+            <h2><u>Tasks</u></h2>    
+            <div class="task">
+                <input type="checkbox" class="checkWithLabel" id="Task1"/>
+                <label for="Task1" class="labelForCheck">Task 1</label>
+            </div>
+            <div class="task">
+                <input type="checkbox" class="checkWithLabel" id="Task2"/>
+                <label for="Task2" class="labelForCheck">Task 2</label>
+            </div>
+            <div class="task">
+                <input type="checkbox" class="checkWithLabel" id="Task3"/>
+                <label for="Task3" class="labelForCheck">Task 3</label>
+            </div>
         </div>
     </div>
     <form action="" method="get" class="inputs">
