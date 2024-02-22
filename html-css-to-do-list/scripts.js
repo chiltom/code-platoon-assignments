@@ -29,9 +29,12 @@ document.getElementById("submitTask").addEventListener("click", function(event) 
 
     // Reset input text field and form as a whole
     document.forms["addTask"].reset()
-})
+});
 
 // Event listener to delete tasks after completed
 document.querySelectorAll('.checkWithLabel').addEventListener("click", function(event) {
-    // Prevent default keybinds and get the 
+    // Prevent default keybinds and remove the parent element of the box clicked
+    event.preventDefault();
+    alert(event.target);
+    const target = event.target;
 })
