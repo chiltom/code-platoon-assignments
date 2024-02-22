@@ -1,24 +1,37 @@
 // Event listener for task submission
 document.getElementById("submitTask").addEventListener("click", function(event) {
+    // Prevent default keybinds from happening and get new task from input field
     event.preventDefault();
     const newTask = document.getElementById("newTask").value;
 
+    // Grab container for tasks
     const tasks_container = document.getElementById("tasks");
-    const new_div = document.createElement("div");
-    new_div.classList = "task";
-    tasks_container.appendChild(new_div);
 
+    // Create label with task name to be appended under container
+    const label = document.createElement("label");
+    label.id = newTask;
+    label.classList = "labelForCheck";
+    
+    // Create input element for checkbox to be appended under label
     const input = document.createElement("input");
     input.type = "checkbox";
     input.classList = "checkWithLabel";
     input.id = newTask;
-    new_div.appendChild(input);
 
-    const label = document.createElement("label");
-    label.for = newTask;
-    label.classList = "labelForCheck";
-    label.textContent = newTask;
-    new_div.appendChild(label);
+    // Create span to hold text after input box inside of label
+    const span = document.createElement('span');
+    span.textContent = newTask;
+    
+    // Append input under label and label under tasks_container
+    label.appendChild(input);
+    label.appendChild(span);
+    tasks_container.appendChild(label);
+
+    // Reset input text field and form as a whole
+    document.forms["addTask"].reset()
 })
 
-
+// Event listener to delete tasks after completed
+document.querySelectorAll('.checkWithLabel').addEventListener("click", function(event) {
+    // Prevent default keybinds and get the 
+})
