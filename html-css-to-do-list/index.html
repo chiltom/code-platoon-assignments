@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./styles.css"/>
-    <script src="./scripts.js"></script>
+    <script defer src="./scripts.js"></script>
     <title>To-Do List</title>
 </head>
 <body>
@@ -13,30 +13,12 @@
         <p><em>Your personal planning space</em></p>
     </header>
     <div class="container">
-        <div class="tasks">
-            <h2><u>Tasks</u></h2>    
-            <div class="task">
-                <input type="checkbox" class="checkWithLabel" id="Task1"/>
-                <label for="Task1" class="labelForCheck">Task 1</label>
-            </div>
-            <div class="task">
-                <input type="checkbox" class="checkWithLabel" id="Task2"/>
-                <label for="Task2" class="labelForCheck">Task 2</label>
-            </div>
-            <div class="task">
-                <input type="checkbox" class="checkWithLabel" id="Task3"/>
-                <label for="Task3" class="labelForCheck">Task 3</label>
-            </div>
+        <div id="tasks">
         </div>
     </div>
-    <form action="" method="get" class="inputs">
-        <div class="inputs">
-            <label for="addTask">Add a Task: </label>
-            <input type="text" id="addTask" name="addTask"/>
-        </div>
-        <div class="inputs">
-            <input type="submit" id="submitTask" value="Add Task"/>
-        </div>
+    <form action="" method="get" class="inputs" id="addTask">
+        <input type="text" id="newTask" placeholder="Add a Task">
+        <input type="submit" id="submitTask">
     </form>
 </body>
 </html>

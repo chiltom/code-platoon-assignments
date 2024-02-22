@@ -20,17 +20,13 @@ em {
     font-weight: 400;
 }
 
-li {
-    font-size: large;
-}
-
 .container {
     display: flex;
     padding: 10px 10px 10px 10px;
     justify-content:space-evenly;
 }
 
-.tasks {
+#tasks {
     display: flex;
     flex-direction: column;
 }
