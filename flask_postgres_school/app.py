@@ -15,8 +15,8 @@ class Subjects(db.Model):
     __tablename__ = 'subjects'
     id = db.Column(db.Integer, primary_key = True)
     subject = db.Column(db.String(50))
-    students = db.relationship('students', backref='subject', lazy=True)
-    teachers = db.relationship('teachers', backref='subjects', lazy=True)
+    # students = db.relationship('students', backref='subject', lazy=True)
+    # teachers = db.relationship('teachers', backref='subjects', lazy=True)
 
 # Establish relationships between subject in students and teachers with subject.id
 class Students(db.Model):
@@ -25,7 +25,8 @@ class Students(db.Model):
     first_name = db.Column(db.String(50))
     last_name = db.Column(db.String(50))
     age = db.Column(db.Integer)
-    subject_id = db.Column(db.Integer, db.ForeignKey('subject.id'), nullable=False)
+    # subject_id = db.Column(db.Integer, db.ForeignKey('subject.id'), nullable=False)
+    subject = db.Column(db.Integer)
 
 class Teachers(db.Model):
     __tablename__ = 'teachers'
@@ -33,7 +34,8 @@ class Teachers(db.Model):
     first_name = db.Column(db.String(50))
     last_name = db.Column(db.String(50))
     age = db.Column(db.Integer)
-    subject_id = db.Column(db.Integer, db.ForeignKey('subject.id'), nullable=False)
+    # subject_id = db.Column(db.Integer, db.ForeignKey('subject.id'), nullable=False)
+    subject = db.Column(db.Integer)
 
 # RESTful API Endpoints
 
@@ -42,9 +44,18 @@ class Teachers(db.Model):
 @app.route('/students/', methods=['GET'])
 def get_students() -> list:
     students = Students.query.all()
+    subjects = Subjects.query.all()
+    teachers = Teachers.query.all()
     student_list = []
     for student in students:
-        student_list.append({'id': student.id, 'first_name': student.first_name, 'last_name': student.last_name, 'age': student.age, 'class': {}})
+        class_dict = {}
+        for subject in subjects:
+            if student.subject == subject.id:
+                class_dict["subject"] = subject.subject
+        for teacher in teachers:
+            if teacher.subject == student.subject:
+                class_dict['teacher'] = f"{teacher.first_name} {teacher.last_name}"
+        student_list.append({'id': student.id, 'first_name': student.first_name, 'last_name': student.last_name, 'age': student.age, 'class': class_dict})
     return jsonify(student_list)
 
 if __name__ == "__main__":
