@@ -58,5 +58,25 @@ def get_students() -> list:
         student_list.append({'id': student.id, 'first_name': student.first_name, 'last_name': student.last_name, 'age': student.age, 'class': class_dict})
     return jsonify(student_list)
 
+# Return a list of teachers, the subjects they teach, and the students within each subject
+@app.route('/teachers/', methods=['GET'])
+def get_teachers() -> list:
+    students = Students.query.all()
+    subjects = Subjects.query.all()
+    teachers = Teachers.query.all()
+    teacher_list = []
+    for teacher in teachers:
+        subject_dict = {}
+        student_list = []
+        for subject in subjects:
+            if teacher.subject == subject.id:
+                subject_dict['subject'] = subject.subject
+        for student in students:
+            if teacher.subject == student.subject:
+                student_list.append(f"{student.first_name} {student.last_name}")
+        subject_dict['students'] = student_list
+        teacher_list.append({'first_name': teacher.first_name, 'last_name': teacher.last_name, 'age': teacher.age, 'subject': subject_dict})
+    return jsonify(teacher_list)
+
 if __name__ == "__main__":
     app.run(port=8000, debug=True)
