@@ -3,11 +3,34 @@ body {
   font-family: "Helvetica Neue", sans-serif;
   font-weight: 300;
   text-align: center;
+  background-image: url("/images/john-towner-JgOeRuGD_Y4-unsplash.jpg");
 }
 
 h1 {
   font-weight: 400
 }
 
-/* TODO: Style list elements and make it centered on the page, maybe
-inside of its own container */
+li {
+  list-style-type: none;
+  color: aliceblue;
+  margin: 5px 5px 5px -40px;
+  padding: 0;
+}
+
+nav {
+  color: rgb(231, 237, 241)
+}
+
+#gameContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+#userGuess {
+  opacity: 0.7;
+}
+
+#resetButton {
+  width: 200px;
+  align-self: center;
+}
