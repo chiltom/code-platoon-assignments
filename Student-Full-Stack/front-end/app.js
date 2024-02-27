@@ -15,7 +15,8 @@ const removeListElements = () => {
  */
 const containerOne = document.createElement('div');
 containerOne.id = 'containerOne';
-document.body.appendChild(containerOne);
+const transbox = document.getElementById('transbox')
+transbox.appendChild(containerOne);
 
 // GET ALL STUDENTS
 // Container to hold button and list of all students
@@ -120,7 +121,7 @@ const getStudentAges = async() => {
  */
 const containerTwo = document.createElement('div');
 containerTwo.id = 'containerTwo';
-document.body.appendChild(containerTwo);
+transbox.appendChild(containerTwo);
 
 // GET OLD STUDENTS
 // Container
@@ -234,7 +235,7 @@ const getAdvanceStudents = async() => {
 // Container
 const containerThree = document.createElement('div');
 containerThree.id = 'containerThree';
-document.body.appendChild(containerThree);
+transbox.appendChild(containerThree);
 
 // Button
 const resetButton = document.createElement('button');
