@@ -1,4 +1,28 @@
-// Guessing game logic
+// Create game container
+const gameContainer = document.createElement('div');
+gameContainer.id = 'gameContainer';
+document.body.appendChild(gameContainer);
+
+// Create form to go in game container
+const form = document.createElement('form');
+form.id = 'userGuess';
+gameContainer.appendChild(form);
+
+// Create inputs to go into form
+const numField = document.createElement('input');
+numField.name = 'guess';
+numField.type = 'number';
+numField.placeholder = 'Enter a guess: ';
+const submitButton = document.createElement('input');
+submitButton.type = 'submit';
+form.appendChild(numField);
+form.appendChild(submitButton);
+
+// Create guess history list as log
+const guessLog = document.createElement('ul');
+guessLog.id = 'guessHistory';
+gameContainer.appendChild(guessLog);
+
 // Create function to make random number and store it
 function getNum() {return Math.floor(Math.random() * 100) + 1};
 const randNum = getNum();
