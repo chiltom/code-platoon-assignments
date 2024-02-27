@@ -1,0 +1,17 @@
+body {
+    background-image: url(https://www.google.com/url?sa=i&url=https%3A%2F%2Fsouthpark.cc.com%2Fwiki%2FSouth_Park_Elementary&psig=AOvVaw3Zb-ztFPY-PJiKHAxFgUsw&ust=1709156781627000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCKissqi_zIQDFQAAAAAdAAAAABAF);
+}
+
+#containerOne, #containerTwo, #containerThree {
+    display:flex;
+    justify-content: space-around;
+    font-size: 25px;
+}
+
+#getAllStudsCont, #getStudentNamesCont, #studAgeCont, #getOldStudsCont, #youngStudsCont, #advStudCont {
+    display:flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    font-size: 20px;
+    font-style: italic;
+}
