@@ -9,6 +9,15 @@
   mix-blend-mode: multiply;
 }
 
+input {
+  margin: 5px;
+}
+
+.cardImg {
+  width: 130px;
+  height: 130px;
+}
+
 
 /* .logo {
   height: 6em;
