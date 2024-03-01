@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css'
 
 function App() {
   // State hooks and handlers for hooks
   const [pokeName, setPokeName] = useState("");
+  const [pokeData, setPokeData] = useState(null);
+
   const handlePokeNameChange = e => setPokeName(e.target.value);
 
   // Helper Functions
@@ -24,22 +26,24 @@ function App() {
     return output
   }
 
-  // Handle form submission for pokemon search, make asynchronous to handle response time from api request
-  const handleSubmit = async (e) => {
-    // Prevent page refresh
-    e.preventDefault();
-    // Grab data from pokeapi with pokeName that was handled onChange when the name was input (line 72)
-    let data = null;
-    // Use try catch to catch bad responses and post error, else grab data return from pokeapi
-    try {
-      const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokeName.toLowerCase()}`);
-      data = await response.data;
-    } catch (error) {
-      data = `${error.response.status}: ${error.response.data}`;
+  useEffect(() => {
+    const getPokemonData = async () => {
+      try {
+        const response = await axios.get(`http://pokeapi.co/api/v2/pokemon/${pokeName}`);
+        setPokeData(response.data);
+      } catch(error) {
+        console.error(error.response.data);
+      }
     }
-    // Debugging console.log
-    console.log(data);
+    if (pokeName.length > 0) {
+      getPokemonData();
+    }
+  }, [pokeName]);
 
+  // Handle form submission for pokemon search, make asynchronous to handle response time from api request
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setPokeName("");
     // Grab output container to hold pokemon "cards"
     const outputCont = document.getElementById('outputCont');
     // Create pokemon "card" to hold data
@@ -49,18 +53,18 @@ function App() {
     // Create header for card name and append to card
     const cardName = document.createElement('h3');
     cardName.className = 'cardName'
-    cardName.textContent = toTitleCase(data.name);
+    cardName.textContent = toTitleCase(pokeData.name);
     card.appendChild(cardName);
     // Add pokemon types to card
     const cardTypes = document.createElement('p');
     cardTypes.className = 'cardTypes';
-    console.log(data.types);
-    cardTypes.textContent = typeString(data.types);
+    console.log(pokeData.types);
+    cardTypes.textContent = typeString(pokeData.types);
     card.appendChild(cardTypes);
     // Add pokemon picture to card
     const cardImg = document.createElement('img');
     cardImg.className = 'cardImg'
-    cardImg.src = data.sprites.front_default;
+    cardImg.src = pokeData.sprites.front_default;
     card.appendChild(cardImg);
   }
 
