@@ -1,0 +1,54 @@
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    font-size: 0px;
+}
+
+.box {
+    display: inline-block;
+    border: 2px solid black;
+    margin: 10px;
+    width: 100px;
+    height: 100px;
+    font-size: 18px;
+    padding: 20px;
+}
+
+.float-box {
+    float: left;
+}
+
+.text {
+    clear: left;
+}
+
+.item {
+    display:inline-block;
+    display: inline-block;
+    border: 2px solid black;
+    margin: 10px;
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.link {
+    color: green;
+}
+
+.link:visited {
+    color: yellow;
+}
+
+.link:hover {
+    color: orange;
+    background-color: blue;
+}
+
+.textField:focus {
+    background-color: grey;
+}
