@@ -42,3 +42,22 @@ A repository containing all of the individual assignments I complete in Code Pla
 - recursion-challenges
 - recursive-loop
 - smallest-node
+- FlattenList
+
+## Week 4 - Full Stack
+- flask_postgres_school
+- html-css-to-do-list
+- html-dom-manipulation
+- html-number-guessing-game
+- html-static-webpage
+- simple_flask_server
+- sql-basics
+
+## Week 5 - Front End
+- pokemon-web-app-react
+- react-hangman
+- react-linkedin
+- react-mute-button
+- react-todo-list
+- react-understanding-css
+- Student-Full-Stack
