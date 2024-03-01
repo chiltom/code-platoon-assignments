@@ -1,32 +1,35 @@
 import { useState, useEffect } from 'react'
 import words from './assets/words.jsx'
 import './App.css'
-import Guess from './Guess.jsx'
+import Game from './Game.jsx'
 
 function App() {
-  const [puzzle, setPuzzle] = useState("");
+  const [puzzle, setPuzzle] = useState([]);
   const [guessedLetters, setGuessedLetters] = useState([]);
+  const [input, setInput] = useState("");
 
   useEffect(() => {
-    setPuzzle(words[Math.floor(Math.random() * words.length)]);
+    setPuzzle((words[Math.floor(Math.random() * words.length)]).split(""));
   }, []);
 
-  const handleGuess = e => setGuessedLetters([...guessedLetters, e.target.value]);
+  const handleInput = e => setInput(e.target.value);
 
-  const handleSubmission = (e) => {
-    return e.target.value
+  const handleSubmission = e => {
+    e.preventDefault();
+    setGuessedLetters([...guessedLetters, input]);
+    setInput("");
   };
 
   return (
     <>
       <h1>Hangman</h1>
       <div id='puzzleCont'>
-        <p id='puzzleWord'>{puzzle}</p>
-        <p id='guessedLetters'></p>
+        <Game arr={puzzle}/>
+        <p id='guessedLetters'>{guessedLetters}</p>
       </div>
       <div id='inputCont'>
         <form onSubmit={handleSubmission}>
-          <input type='text' name='guess' value={""} onChange={handleGuess}/>
+          <input type='text' name='guess' value={input} onChange={handleInput}/>
           <input type='submit'/>
         </form>
       </div>
