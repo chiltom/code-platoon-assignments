@@ -1,7 +1,5 @@
 function PokeCard({ name, types, img, key }) {
-    console.log(name);
-    console.log(types);
-    console.log(img);
+    
     // Helper Functions
     // Change a word to title case
     const toTitleCase = (str) => {
@@ -14,7 +12,6 @@ function PokeCard({ name, types, img, key }) {
     const typeString = (types) => {
         let output = "Types: ";
         for (let type of types) {
-            console.log(type);
             output += `${toTitleCase(type.type.name)} `;
         }
         return output
@@ -22,8 +19,8 @@ function PokeCard({ name, types, img, key }) {
 
     return (
         <li key={key}>
-            <h3>{name}</h3>
-            <p>{types}</p>
+            <h3>{toTitleCase(name)}</h3>
+            <p>{typeString(types)}</p>
             <img src={img}/>
         </li>
     )
