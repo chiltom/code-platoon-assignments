@@ -6,7 +6,7 @@ import Nav from "react-bootstrap/Nav";
 
 const MyNavbar = () => {
   return (
-    <Navbar expand="lg" className="bg-gray-400 flex-row items-center">
+    <Navbar expand="lg" className="bg-gray-400 flex flex-row items-center">
       <Navbar.Brand className="ml-6 inline-flex items-center">
         <img
           src="https://i.pinimg.com/474x/f4/93/59/f49359cb388713901955962e6eb075af.jpg"
