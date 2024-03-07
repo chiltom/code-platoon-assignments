@@ -7,6 +7,15 @@ import CharacterForm from "../components/CharacterForm";
 import CharacterCard from "../components/CharacterCard";
 
 const CharactersPage = () => {
+  /*
+    TODO: Make buttons on the bottom of the page for next page (if exists)
+    and previous page (if exists)
+        - TODO: Make functionality for grabbing next API calls from the url
+        supplied in the object returned from search response
+    TODO: Pass favorites the char.id instead of char.name so that another
+    API call can be made with the char IDs and a favorites page can be made
+    */
+
   const [characters, setCharacters] = useState({});
   const [favorites, setFavorites] = useState([]);
 
@@ -23,11 +32,12 @@ const CharactersPage = () => {
   };
 
   useEffect(() => {
+    console.log("Characters:");
     console.log(characters);
   }, [characters]);
 
   useEffect(() => {
-    console.log(favorites);
+    console.log(`Favorites: ${favorites}`);
   }, [favorites]);
 
   return (
