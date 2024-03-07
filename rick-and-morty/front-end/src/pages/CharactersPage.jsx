@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useOutletContext, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -12,33 +13,14 @@ const CharactersPage = () => {
     and previous page (if exists)
         - TODO: Make functionality for grabbing next API calls from the url
         supplied in the object returned from search response
-    TODO: Pass favorites the char.id instead of char.name so that another
-    API call can be made with the char IDs and a favorites page can be made
     */
 
   const [characters, setCharacters] = useState({});
-  const [favorites, setFavorites] = useState([]);
-
-  const addFavorites = (newName) => {
-    setFavorites([...favorites, newName]);
-  };
-
-  const removeFavorites = (name) => {
-    setFavorites(
-      favorites.filter((char) => {
-        return char !== name;
-      })
-    );
-  };
 
   useEffect(() => {
     console.log("Characters:");
     console.log(characters);
   }, [characters]);
-
-  useEffect(() => {
-    console.log(`Favorites: ${favorites}`);
-  }, [favorites]);
 
   return (
     <>
@@ -49,12 +31,7 @@ const CharactersPage = () => {
         <Row>
           {characters.results
             ? characters.results.map((char) => (
-                <CharacterCard
-                  char={char}
-                  addFavorites={addFavorites}
-                  removeFavorites={removeFavorites}
-                  key={char.id}
-                />
+                <CharacterCard char={char} key={char.id} />
               ))
             : null}
         </Row>

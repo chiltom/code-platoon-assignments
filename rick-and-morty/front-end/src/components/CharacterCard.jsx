@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useOutletContext, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Card from "react-bootstrap/Card";
 import PropTypes from "prop-types";
 
-const CharacterCard = ({ char, addFavorites, removeFavorites, key }) => {
+const CharacterCard = ({ char, key }) => {
   /* 
     TODO: Make a "See Details" button that changes the URL (useNavigate hook)
     to a more details card (ACharacterPage) that shows more details about the
@@ -12,11 +12,56 @@ const CharacterCard = ({ char, addFavorites, removeFavorites, key }) => {
     navigate hook)
     - Maybe make take the creation date and origin and species from here and
       throw it in there
-    TODO: Change addFavorites and removeFavorites parameters from char.name
-    to char.id to set favorites with IDs for later use in favorites page
       */
 
-  const [isFavorite, setIsFavorite] = useState(false);
+  const { addFavorites, removeFavorites, checkIsFavorite } = useOutletContext();
+  const navigate = useNavigate();
+
+  const isFavorite = checkIsFavorite(char.id);
+
+  const handleAddToFavorites = () => {
+    addFavorites(char);
+  };
+
+  const handleRemoveFromFavorites = () => {
+    removeFavorites(char);
+  };
+
+  const goToCharacter = () => {
+    navigate(`/character/${char.id}`);
+  };
+
+  const renderButton = () => {
+    if (isFavorite) {
+      return (
+        <Button
+          variant="primary"
+          size="sm"
+          className="bg-blue-500"
+          onClick={(e) => {
+            e.preventDefault();
+            handleRemoveFromFavorites();
+          }}
+        >
+          Remove Favorite
+        </Button>
+      );
+    } else {
+      return (
+        <Button
+          variant="primary"
+          size="sm"
+          className="bg-blue-500"
+          onClick={(e) => {
+            e.preventDefault();
+            handleAddToFavorites();
+          }}
+        >
+          Add Favorite
+        </Button>
+      );
+    }
+  };
 
   return (
     <>
@@ -40,33 +85,20 @@ const CharacterCard = ({ char, addFavorites, removeFavorites, key }) => {
             {`Created: ${char.created}`}
             <br />
           </Card.Text>
-          {isFavorite ? (
+          <ButtonGroup>
             <Button
               variant="primary"
               size="sm"
               className="bg-blue-500"
               onClick={(e) => {
                 e.preventDefault();
-                removeFavorites(char.name);
-                setIsFavorite(false);
+                goToCharacter();
               }}
             >
-              Remove Favorite
+              See Details
             </Button>
-          ) : (
-            <Button
-              variant="primary"
-              size="sm"
-              className="bg-blue-500"
-              onClick={(e) => {
-                e.preventDefault();
-                addFavorites(char.name);
-                setIsFavorite(true);
-              }}
-            >
-              Add Favorite
-            </Button>
-          )}
+            {renderButton()}
+          </ButtonGroup>
         </Card.Body>
       </Card>
     </>
