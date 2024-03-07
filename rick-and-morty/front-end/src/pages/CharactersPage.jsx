@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -38,12 +37,16 @@ const CharactersPage = () => {
           <CharacterForm setCharacters={setCharacters} />
         </Row>
         <Row>
-          <CharacterCard
-            characters={characters.results}
-            favorites={favorites}
-            addFavorites={addFavorites}
-            removeFavorites={removeFavorites}
-          />
+          {characters.results
+            ? characters.results.map((char, i) => (
+                <CharacterCard
+                  char={char}
+                  addFavorites={addFavorites}
+                  removeFavorites={removeFavorites}
+                  key={i}
+                />
+              ))
+            : null}
         </Row>
       </Container>
     </>
