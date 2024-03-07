@@ -22,17 +22,17 @@ const MyNavbar = () => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto ml-6">
           <Nav.Item>
-            <Link className="hover:drop-shadow mr-2" to="/about">
+            <Link className="hover:drop-shadow mr-2" to="/about/">
               About
             </Link>
           </Nav.Item>
           <Nav.Item>
-            <Link className="hover:drop-shadow mr-2" to="/characters">
+            <Link className="hover:drop-shadow mr-2" to="/characters/">
               Characters
             </Link>
           </Nav.Item>
           <Nav.Item>
-            <Link className="hover:drop-shadow mr-2" to="/favorites">
+            <Link className="hover:drop-shadow mr-2" to="/favorites/">
               Favorites
             </Link>
           </Nav.Item>

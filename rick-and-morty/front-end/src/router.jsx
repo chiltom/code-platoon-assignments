@@ -5,6 +5,7 @@ import NotFound from "./pages/NotFound";
 import AboutPage from "./pages/AboutPage";
 import CharactersPage from "./pages/CharactersPage";
 import FavoritesPage from "./pages/FavoritesPage";
+import ACharacterPage from "./pages/ACharacterPage";
 
 const router = createBrowserRouter([
   {
@@ -16,15 +17,19 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "about",
+        path: "about/",
         element: <AboutPage />,
       },
       {
-        path: "characters",
+        path: "characters/",
         element: <CharactersPage />,
       },
       {
-        path: "favorites",
+        path: "characters/:id/",
+        element: <ACharacterPage />,
+      },
+      {
+        path: "favorites/",
         element: <FavoritesPage />,
       },
     ],

@@ -6,13 +6,14 @@ import PropTypes from "prop-types";
 
 const CharacterCard = ({ char, addFavorites, removeFavorites, key }) => {
   /* 
-    TODO: Make a "See Details" button that changes the card to a more details
-    card (separate component?) that shows more details about the character
+    TODO: Make a "See Details" button that changes the URL (useNavigate hook)
+    to a more details card (ACharacterPage) that shows more details about the
+    character (use useParams hook in ACharacterPage by passing ID down through
+    navigate hook)
     - Maybe make take the creation date and origin and species from here and
       throw it in there
     TODO: Change addFavorites and removeFavorites parameters from char.name
-    to char.id to set favorites with IDs for later API calls for favorites
-    page
+    to char.id to set favorites with IDs for later use in favorites page
       */
 
   const [isFavorite, setIsFavorite] = useState(false);

@@ -48,12 +48,12 @@ const CharactersPage = () => {
         </Row>
         <Row>
           {characters.results
-            ? characters.results.map((char, i) => (
+            ? characters.results.map((char) => (
                 <CharacterCard
                   char={char}
                   addFavorites={addFavorites}
                   removeFavorites={removeFavorites}
-                  key={i}
+                  key={char.id}
                 />
               ))
             : null}
