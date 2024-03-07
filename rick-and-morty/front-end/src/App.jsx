@@ -16,7 +16,9 @@ export default function App() {
 
   const removeFavorites = (char) => {
     const updatedFavorites = favorites.filter((c) => {
-      return c !== char;
+      if (c.id !== char.id) {
+        return c;
+      }
     });
     setFavorites(updatedFavorites);
   };

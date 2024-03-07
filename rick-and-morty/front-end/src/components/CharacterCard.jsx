@@ -5,15 +5,6 @@ import Card from "react-bootstrap/Card";
 import PropTypes from "prop-types";
 
 const CharacterCard = ({ char, key }) => {
-  /* 
-    TODO: Make a "See Details" button that changes the URL (useNavigate hook)
-    to a more details card (ACharacterPage) that shows more details about the
-    character (use useParams hook in ACharacterPage by passing ID down through
-    navigate hook)
-    - Maybe make take the creation date and origin and species from here and
-      throw it in there
-      */
-
   const { addFavorites, removeFavorites, checkIsFavorite } = useOutletContext();
   const navigate = useNavigate();
 
@@ -73,17 +64,10 @@ const CharacterCard = ({ char, key }) => {
         />
         <Card.Body>
           <Card.Title>{`${char.name}`}</Card.Title>
-          <Card.Text>
-            {`ID: ${char.id}`}
-            <br />
+          <Card.Text className="mb-3">
             {`Species: ${char.species}`}
             <br />
             {`Status: ${char.status}`}
-            <br />
-            {`Origin: ${char.origin.name}`}
-            <br />
-            {`Created: ${char.created}`}
-            <br />
           </Card.Text>
           <ButtonGroup>
             <Button
@@ -107,8 +91,6 @@ const CharacterCard = ({ char, key }) => {
 
 CharacterCard.propTypes = {
   char: PropTypes.object,
-  addFavorites: PropTypes.func,
-  removeFavorites: PropTypes.func,
   key: PropTypes.number,
 };
 

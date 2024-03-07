@@ -1,26 +1,35 @@
 import { useEffect, useState } from "react";
-import { useOutletContext, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
 import CharacterForm from "../components/CharacterForm";
 import CharacterCard from "../components/CharacterCard";
+import PageButtons from "../components/PageButtons";
 
 const CharactersPage = () => {
-  /*
-    TODO: Make buttons on the bottom of the page for next page (if exists)
-    and previous page (if exists)
-        - TODO: Make functionality for grabbing next API calls from the url
-        supplied in the object returned from search response
-    */
-
   const [characters, setCharacters] = useState({});
+  const [nextPage, setNextPage] = useState("");
+  const [prevPage, setPrevPage] = useState("");
 
   useEffect(() => {
     console.log("Characters:");
     console.log(characters);
+    if (characters.info) {
+      if (characters.info.next) {
+        setNextPage(characters.info.next);
+      } else {
+        setNextPage("");
+      }
+      if (characters.info.prev) {
+        setPrevPage(characters.info.prev);
+      } else {
+        setPrevPage("");
+      }
+    }
   }, [characters]);
+
+  useEffect(() => {
+    console.log(nextPage, prevPage);
+  }, [nextPage, prevPage]);
 
   return (
     <>
@@ -35,6 +44,11 @@ const CharactersPage = () => {
               ))
             : null}
         </Row>
+        <PageButtons
+          nextPage={nextPage}
+          prevPage={prevPage}
+          setCharacters={setCharacters}
+        />
       </Container>
     </>
   );

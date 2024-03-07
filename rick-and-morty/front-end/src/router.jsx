@@ -25,7 +25,7 @@ const router = createBrowserRouter([
         element: <CharactersPage />,
       },
       {
-        path: "characters/:id/",
+        path: "character/:id/",
         element: <ACharacterPage />,
       },
       {
