@@ -2,6 +2,7 @@ import { useOutletContext } from "react-router-dom";
 import CharacterCard from "../components/CharacterCard";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 const FavoritesPage = () => {
   const { favorites } = useOutletContext();
@@ -9,10 +10,13 @@ const FavoritesPage = () => {
   return (
     <>
       <Container>
-        <h1 className="text-center text-3xl font-bold mb-6">Favorites</h1>
-        <Row className="flex flex-row justify-center">
+        <h1 className="text-center text-3xl font-bold">Favorites</h1>
+        <h2 className="text-center mb-6 italic">You can only have 4!</h2>
+        <Row className="flex flex-row items-center">
           {favorites.map((char) => (
-            <CharacterCard char={char} key={char.id} />
+            <Col key={char.id}>
+              <CharacterCard char={char} key={char.id} />
+            </Col>
           ))}
         </Row>
       </Container>

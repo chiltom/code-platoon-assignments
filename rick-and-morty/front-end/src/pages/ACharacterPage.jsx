@@ -10,7 +10,8 @@ import Card from "react-bootstrap/Card";
 const ACharacterPage = () => {
   const [character, setCharacter] = useState({});
   const { id } = useParams();
-  const { addFavorites, removeFavorites, checkIsFavorite } = useOutletContext();
+  const { favorites, addFavorites, removeFavorites, checkIsFavorite } =
+    useOutletContext();
   const navigate = useNavigate();
   const isFavorite = checkIsFavorite(character.id);
 
@@ -34,7 +35,11 @@ const ACharacterPage = () => {
   }, []);
 
   const handleAddToFavorites = () => {
-    addFavorites(character);
+    if (favorites.length < 4) {
+      addFavorites(character);
+    } else {
+      alert("Too many favorites, you can only have four!");
+    }
   };
 
   const handleRemoveFromFavorites = () => {

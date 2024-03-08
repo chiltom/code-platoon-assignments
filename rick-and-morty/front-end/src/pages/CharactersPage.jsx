@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import CharacterForm from "../components/CharacterForm";
 import CharacterCard from "../components/CharacterCard";
 import PageButtons from "../components/PageButtons";
@@ -31,10 +32,12 @@ const CharactersPage = () => {
         <Row>
           <CharacterForm setCharacters={setCharacters} />
         </Row>
-        <Row>
+        <Row xl={5} lg={4}>
           {characters.results
             ? characters.results.map((char) => (
-                <CharacterCard char={char} key={char.id} />
+                <Col key={char.id}>
+                  <CharacterCard char={char} key={char.id} />
+                </Col>
               ))
             : null}
         </Row>

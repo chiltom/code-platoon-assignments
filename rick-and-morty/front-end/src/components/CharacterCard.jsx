@@ -5,13 +5,18 @@ import Card from "react-bootstrap/Card";
 import PropTypes from "prop-types";
 
 const CharacterCard = ({ char, key }) => {
-  const { addFavorites, removeFavorites, checkIsFavorite } = useOutletContext();
+  const { favorites, addFavorites, removeFavorites, checkIsFavorite } =
+    useOutletContext();
   const navigate = useNavigate();
 
   const isFavorite = checkIsFavorite(char.id);
 
   const handleAddToFavorites = () => {
-    addFavorites(char);
+    if (favorites.length < 4) {
+      addFavorites(char);
+    } else {
+      alert("Too many favorites, you can only have four!");
+    }
   };
 
   const handleRemoveFromFavorites = () => {
