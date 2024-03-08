@@ -1,12 +1,21 @@
+import { useOutletContext } from "react-router-dom";
+import CharacterCard from "../components/CharacterCard";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+
 const FavoritesPage = () => {
-  /* 
-    TODO: Create API call for all favorite characters and return cards for
-    each character in page
-    */
+  const { favorites } = useOutletContext();
 
   return (
     <>
-      <h1>Favorites</h1>
+      <Container>
+        <h1 className="text-center text-3xl font-bold mb-6">Favorites</h1>
+        <Row className="flex flex-row justify-center">
+          {favorites.map((char) => (
+            <CharacterCard char={char} key={char.id} />
+          ))}
+        </Row>
+      </Container>
     </>
   );
 };

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Button from "react-bootstrap/Button";
+import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import PropTypes from "prop-types";
@@ -8,7 +8,11 @@ import axios from "axios";
 const CharacterForm = ({ setCharacters }) => {
   const [input, setInput] = useState("");
   const [name, setName] = useState("");
-  const [isLoading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const backToAll = () => {
+    navigate("/characters");
+  };
 
   useEffect(() => {
     const getData = async () => {
@@ -21,12 +25,8 @@ const CharacterForm = ({ setCharacters }) => {
         alert(error);
       }
     };
-    if (isLoading) {
-      getData().then(() => {
-        setLoading(false);
-      });
-    }
-  }, [isLoading]);
+    getData();
+  }, []);
 
   useEffect(() => {
     const getData = async () => {
@@ -44,36 +44,28 @@ const CharacterForm = ({ setCharacters }) => {
     }
   }, [name]);
 
-  const handleAll = (e) => {
-    e.preventDefault();
-    setLoading(true);
-  };
-
   const handleSubmit = (e) => {
-    e.preventDefault();
-    setName(input);
-    setInput("");
+    if (input) {
+      e.preventDefault();
+      setName(input);
+      setInput("");
+    } else {
+      e.preventDefault();
+      backToAll();
+    }
   };
 
   return (
     <>
       <Form>
         <InputGroup className="flex justify-center">
-          <Button
-            className="bg-slate-500 mr-5"
-            variant="secondary"
-            size="sm"
-            onClick={handleAll}
-          >
-            {isLoading ? "Loading..." : "Click for All Characters"}
-          </Button>
           <InputGroup.Text className="bg-slate-500 text-white">
             Search Character Name:
           </InputGroup.Text>
           <Form.Control
             type="text"
             size="sm"
-            placeholder="Type here:"
+            placeholder="Type ' ' to return to all characters:"
             id="inputQuery"
             className="max-w-80"
             value={input}

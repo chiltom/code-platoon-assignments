@@ -11,8 +11,6 @@ const CharactersPage = () => {
   const [prevPage, setPrevPage] = useState("");
 
   useEffect(() => {
-    console.log("Characters:");
-    console.log(characters);
     if (characters.info) {
       if (characters.info.next) {
         setNextPage(characters.info.next);
@@ -26,10 +24,6 @@ const CharactersPage = () => {
       }
     }
   }, [characters]);
-
-  useEffect(() => {
-    console.log(nextPage, prevPage);
-  }, [nextPage, prevPage]);
 
   return (
     <>

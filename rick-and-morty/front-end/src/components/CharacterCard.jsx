@@ -62,7 +62,7 @@ const CharacterCard = ({ char, key }) => {
           src={char.image}
           alt={`Picture of ${char.name}`}
         />
-        <Card.Body>
+        <Card.Body className="flex flex-col justify-evenly">
           <Card.Title>{`${char.name}`}</Card.Title>
           <Card.Text className="mb-3">
             {`Species: ${char.species}`}
