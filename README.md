@@ -24,9 +24,10 @@ A repository containing all of the individual assignments I complete in Code Pla
 - terminal-phone-brogrammers
 
 ## Week 2 - OOP
+
 - app-users-i
 - app-users-ii
-- app-users-iii 
+- app-users-iii
 - boggle-i
 - boggle-ii
 - contact-list
@@ -37,6 +38,7 @@ A repository containing all of the individual assignments I complete in Code Pla
 - zoo
 
 ## Week 3 - Basic Data Structures and Algorithms
+
 - binary-search
 - ds-linear-vs-binary-search
 - recursion-challenges
@@ -45,6 +47,7 @@ A repository containing all of the individual assignments I complete in Code Pla
 - FlattenList
 
 ## Week 4 - Full Stack
+
 - flask_postgres_school
 - html-css-to-do-list
 - html-dom-manipulation
@@ -54,10 +57,16 @@ A repository containing all of the individual assignments I complete in Code Pla
 - sql-basics
 
 ## Week 5 - Front End
-- pokemon-web-app-react
+
+- pokemon-web-app-react (separate repo)
 - react-hangman
 - react-linkedin
 - react-mute-button
 - react-todo-list
 - react-understanding-css
 - Student-Full-Stack
+- rick-and-morty (separate repo)
+
+## Week 6 - SQL
+
+- sql-schema-design
