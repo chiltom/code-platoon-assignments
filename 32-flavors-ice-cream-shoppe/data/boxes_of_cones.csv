@@ -1,0 +1,7 @@
+id,cone,quantity,gluten_free
+1,waffle,20,false
+2,waffle,5,true
+3,sugar,30,false
+4,sugar,10,true
+5,cake,15,false
+6,cake,5,true
