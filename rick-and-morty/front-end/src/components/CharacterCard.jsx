@@ -33,7 +33,7 @@ const CharacterCard = ({ char, key }) => {
         <Button
           variant="primary"
           size="sm"
-          className="bg-blue-500"
+          className="bg-blue-500 unfavorite"
           onClick={(e) => {
             e.preventDefault();
             handleRemoveFromFavorites();
@@ -47,7 +47,7 @@ const CharacterCard = ({ char, key }) => {
         <Button
           variant="primary"
           size="sm"
-          className="bg-blue-500"
+          className="bg-blue-500 favorite"
           onClick={(e) => {
             e.preventDefault();
             handleAddToFavorites();
@@ -61,7 +61,7 @@ const CharacterCard = ({ char, key }) => {
 
   return (
     <>
-      <Card key={key} style={{ width: "12rem" }}>
+      <Card key={key} id={char.id} style={{ width: "12rem" }}>
         <Card.Img
           variant="top"
           src={char.image}
@@ -78,7 +78,7 @@ const CharacterCard = ({ char, key }) => {
             <Button
               variant="primary"
               size="sm"
-              className="bg-blue-500"
+              className="bg-blue-500 see-details"
               onClick={(e) => {
                 e.preventDefault();
                 goToCharacter();

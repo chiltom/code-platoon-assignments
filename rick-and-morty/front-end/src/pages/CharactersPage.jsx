@@ -32,7 +32,7 @@ const CharactersPage = () => {
         <Row>
           <CharacterForm setCharacters={setCharacters} />
         </Row>
-        <Row xl={5} lg={4}>
+        <Row xl={5} lg={4} id="characters-container">
           {characters.results
             ? characters.results.map((char) => (
                 <Col key={char.id}>
