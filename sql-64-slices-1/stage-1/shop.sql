@@ -68,8 +68,10 @@ CREATE TABLE stores (
 
 CREATE TABLE drivers (
     driver_id SERIAL PRIMARY KEY,
-    store_id INT REFERENCES stores(store_id) NOT NULL,
-    full_name VARCHAR(40) NOT NULL
+    store_id INT NOT NULL,
+    full_name VARCHAR(40) NOT NULL,
+
+    FOREIGN KEY (store_id) REFERENCES stores(store_id)
 );
 
 \COPY drivers FROM './data/drivers.csv' CSV HEADER;
@@ -84,11 +86,16 @@ CREATE TABLE drivers (
 
 CREATE TABLE orders (
     order_id SERIAL PRIMARY KEY,
-    customer_id INT REFERENCES customers(customer_id) NOT NULL,
+    customer_id INT NOT NULL,
     date DATE NOT NULL,
-    pizza_type VARCHAR(10) REFERENCES available_pizzas(pizza_name) NOT NULL,
-    store_id INT REFERENCES stores(store_id) NOT NULL,
-    toppings INT REFERENCES available_toppings(topping_id)
+    pizza_type VARCHAR(10) NOT NULL,
+    store_id INT NOT NULL,
+    toppings INT,
+
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+    FOREIGN KEY (pizza_type) REFERENCES available_pizzas(pizza_name),
+    FOREIGN KEY (store_id) REFERENCES stores(store_id),
+    FOREIGN KEY (toppings) REFERENCES available_toppings(topping_id)
 );
 
 \COPY orders FROM './data/orders.csv' CSV HEADER;
@@ -99,10 +106,14 @@ CREATE TABLE orders (
 -- order_id as foreign key referencing orders(order_id)
 
 CREATE TABLE deliveries (
-    driver_id INT REFERENCES drivers(driver_id) NOT NULL,
-    order_id INT REFERENCES orders(order_id) NOT NULL,
+    driver_id INT NOT NULL,
+    order_id INT NOT NULL,
     started_delivery TIME NOT NULL,
-    completed_delivery TIME NOT NULL
+    completed_delivery TIME NOT NULL,
+
+    FOREIGN KEY (driver_id) REFERENCES drivers(driver_id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id)
+
 );
 
 \COPY deliveries FROM './data/deliveries.csv' CSV HEADER;

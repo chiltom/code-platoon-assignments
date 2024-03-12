@@ -2,7 +2,12 @@
 DROP TABLE IF EXISTS action_figures CASCADE;
 DROP TABLE IF EXISTS employees CASCADE;
 DROP TABLE IF EXISTS games CASCADE;
+DROP TABLE IF EXISTS gaming_engines CASCADE;
+DROP TABLE IF EXISTS genre_games CASCADE;
+DROP TABLE IF EXISTS genres CASCADE;
 DROP TABLE IF EXISTS posters CASCADE;
+DROP TABLE IF EXISTS shifts CASCADE;
+DROP TABLE IF EXISTS social_securities CASCADE;
 
 
 -- Implement new schema design
@@ -47,9 +52,37 @@ CREATE TABLE employees (
 
 CREATE TABLE games (
     id SERIAL PRIMARY KEY,
-    game_title VARCHAR(30) UNIQUE NOT NULL,
-    quantity INT NOT NULL,
-    price DECIMAL(4,2) NOT NULL
+    game_title VARCHAR(30) 
+        UNIQUE 
+        NOT NULL,
+    quantity INT 
+        NOT NULL,
+    price DECIMAL(4,2) 
+        NOT NULL
+);
+
+CREATE TABLE gaming_engines (
+    engine_id SERIAL PRIMARY KEY,
+    engine_name VARCHAR(30)
+        UNIQUE
+        NOT NULL
+        CHECK (engine_name ~ '^[A-Z][A-Za-z0-9 \-]+$')
+);
+
+CREATE TABLE genre_games (
+    id SERIAL PRIMARY KEY,
+    game_id INT NOT NULL,
+    genre_id INT NOT NULL,
+    FOREIGN KEY (game_id) REFERENCES games(id),
+    FOREIGN KEY (genre_id) REFERENCES genres(genre_id)
+);
+
+CREATE TABLE genres (
+    genre_id SERIAL PRIMARY KEY,
+    genre_name VARCHAR(20)
+        UNIQUE
+        NOT NULL
+        CHECK (genre_name ~ '^[A-Z][A-Za-z \-]+$')
 );
 
 CREATE TABLE posters (
@@ -66,9 +99,31 @@ CREATE TABLE posters (
         CHECK (price >= 6.00 AND price <= 20.00)
 );
 
+CREATE TABLE shifts (
+    id SERIAL PRIMARY KEY,
+    start_time DATETIME NOT NULL,
+    end_time DATETIME NOT NULL,
+    employee_id INT NOT NULL,
+    FOREIGN KEY (employee_id) REFERENCES employees(id)
+);
+
+CREATE TABLE social_securities (
+    id SERIAL PRIMARY KEY,
+    employee_id INT NOT NULL,
+    ssn INT 
+        UNIQUE
+        NOT NULL,
+    FOREIGN KEY (employee_id) REFERENCES employees(id)
+);
+
 
 -- Copy all data from CSV files
 \COPY action_figures FROM './data/action_figure.csv' CSV HEADER;
 \COPY employees FROM './data/employee.csv' CSV HEADER;
 \COPY games FROM './data/game.csv' CSV HEADER;
+\COPY gaming_engines FROM './data/gaming_engine.csv' CSV HEADER;
+\COPY genre_games FROM './data/genre_game.csv' CSV HEADER;
+\COPY genres FROM './data/genre.csv' CSV HEADER;
 \COPY posters FROM './data/poster.csv' CSV HEADER;
+\COPY shifts FROM './data/shifts.csv' CSV HEADER;
+\COPY social_securities FROM './data/social_security.csv' CSV HEADER;
