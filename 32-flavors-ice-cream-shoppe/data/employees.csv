@@ -1,5 +1,5 @@
-id,name,position,hours
-1,Jerry Rice,Server,10
-2,Mike Tomlinson,Manager,90
-3,Ceedee Lamb,Server,30
-4,Tony Hawk,Server,35
+id,name,position
+1,Jerry Rice,Server
+2,Mike Tomlinson,Manager
+3,Ceedee Lamb,Server
+4,Tony Hawk,Server
