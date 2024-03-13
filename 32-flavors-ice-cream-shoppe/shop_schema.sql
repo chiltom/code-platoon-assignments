@@ -1,13 +1,10 @@
-COMMENT ON SCHEMA ice_cream_shop IS 
-    'This schema designs five tables to manage sales, inventory, and
-    employees of 32 Flavors';
-
 BEGIN;
 
 
 DROP TABLE IF EXISTS flavor_of_ice_cream CASCADE;
 DROP TABLE IF EXISTS type_of_cone CASCADE;
 DROP TABLE IF EXISTS employee CASCADE;
+DROP TABLE IF EXISTS customer CASCADE;
 DROP TABLE IF EXISTS employee_timesheet CASCADE;
 DROP TABLE IF EXISTS sale CASCADE;
 
@@ -92,7 +89,7 @@ CREATE TABLE employee (
     employee_id SERIAL PRIMARY KEY,
     name VARCHAR(30)
         NOT NULL
-        CHECK (name ~ '^[A-Z][A-Za-z \-]'),
+        CHECK (name ~ '^[A-Z][A-Za-z \-]+$'),
     position VARCHAR(50) 
         NOT NULL
         CHECK (position IN (
@@ -107,6 +104,24 @@ COMMENT ON TABLE employee IS
     - The name of each employee, which must be in Title case and have only
     letters (upper and lowercase), spaces, and hyphens
     - Their position in the store, either a server or a manager';
+
+
+CREATE TABLE customer (
+    customer_id SERIAL PRIMARY KEY,
+    name VARCHAR(40) 
+        NOT NULL
+        CHECK (name ~ '^[A-Z][A-Za-z \-]+$'),
+    num_purchases INT
+);
+
+COMMENT ON TABLE customer IS 
+    'Relation that holds the purchase quantity of each customer with the 
+    following fields:
+    - Customer ID that is automatically generated for each record
+    - The name of the customer with a check constraint to ensure that the
+    customer name is in title case and only contains letters, integers, spaces
+    and hyphens
+    - Amount of purchases.';
 
 
 CREATE TABLE employee_timesheet (
@@ -139,6 +154,8 @@ CREATE TABLE sale (
     cone_quantity INT
         NOT NULL
         CHECK (cone_quantity = 1),
+    customer_id INT
+        NOT NULL,
     employee_id INT 
         NOT NULL,
     time_of_sale TIMESTAMP 
@@ -148,6 +165,7 @@ CREATE TABLE sale (
 
     FOREIGN KEY (flavor_id) REFERENCES flavor_of_ice_cream(flavor_id),
     FOREIGN KEY (cone_id) REFERENCES type_of_cone(cone_id),
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
     FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
 );
 
@@ -164,6 +182,7 @@ COMMENT ON TABLE sale IS
     cone_id, establishing a many-to-one connection where one type can be sold many
     times across many different sales
     - The quantity of the cones sold, ensuring that only one cone is sold at a time
+    - The ID of the customer that made the purchase
     - The ID of the employee that served the transaction that references the employee
     relation employee_id, establishing a many-to-one connection where one employee
     can serve many different customers
@@ -175,6 +194,7 @@ COMMENT ON TABLE sale IS
 \COPY flavor_of_ice_cream FROM './data/flavors_of_ice_cream.csv' CSV HEADER;
 \COPY type_of_cone FROM './data/types_of_cones.csv' CSV HEADER;
 \COPY employee FROM './data/employees.csv' CSV HEADER;
+\COPY customer FROM './data/customers.csv' CSV HEADER;
 \COPY employee_timesheet FROM './data/employee_timesheets.csv' CSV HEADER;
 \COPY sale FROM './data/sales.csv' CSV HEADER;
 
