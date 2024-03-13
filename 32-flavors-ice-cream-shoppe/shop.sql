@@ -1,24 +1,25 @@
-/* 
-    This schema aims to create four tables to manage sales, 
-    inventory, and employees of 32 Flavors. Each table holds 
-    a specific purpose, and the three separate tables are all
-    related by the sales table.
-*/
+-- This schema designs five tables to manage sales, inventory, and employees of 32 Flavors
+
 BEGIN;
 
+-- Drop all tables if they already exist in the database, cascading to delete relations as well
 DROP TABLE IF EXISTS flavor_of_ice_cream CASCADE;
 DROP TABLE IF EXISTS type_of_cone CASCADE;
 DROP TABLE IF EXISTS employee CASCADE;
 DROP TABLE IF EXISTS employee_timesheet CASCADE;
 DROP TABLE IF EXISTS sale CASCADE;
 
-
 /*
-    Table which holds the different flavors of ice cream all with:
-    - A primary key ID for each flavor
-    - The name of the flavor (unique so no repeats)
-    - The quantity in stock of that flavor
+    Relation that holds records of flavor of ice cream with these fields:
+    - A primary key ID for each flavor that is automatically set
+    - The name of the flavor which is unique, cannot be omitted, and 
+    must be in the set inventory that the shop holds
+    - The quantity in stock of that flavor, with a constrant that there
+    must always be at least one bucket of ice cream and at most twenty
+    to prevent spoiling
     - A true/false value if the flavor is dairy free or not
+    - The cost per bucket that the store pays the wholesaler
+    - The price per scoop that the store will then charge customers
 */
 
 CREATE TABLE flavor_of_ice_cream (
@@ -50,11 +51,16 @@ CREATE TABLE flavor_of_ice_cream (
 );
 
 /*
-    Table which holds the different types of cones all with:
-    - A primary key ID for each type
-    - The name of the type of cone (not unique for gluten-free variants)
-    - The quantity in stock of that type
+    Relation that holds records of each type of cone with the following fields:
+    - A primary key ID for each type that is automatically generated
+    - The name of the type of cone that must not be omitted and must be in the
+    stores normal inventory that they stock
+    - The quantity in stock of that type of cone that cannot be omitted; the store
+    must always have at least one box of cones in stock and cannot go over 15 boxes
+    due to expiration concerns
     - A true/false value if the flavor is gluten-free or not
+    - The cost per box that the store pays to the wholesaler
+    - The price per cone that the store will charge the customer
 */
 
 CREATE TABLE type_of_cone (
@@ -81,17 +87,16 @@ CREATE TABLE type_of_cone (
 
 
 /*
-    Table which holds the data for all employees of 32 flavors with:
-    - A primary key ID for each employee
-    - The name of each employee, unique so no employee is doubly-entered
-    - The position in the shop that they serve in
-    - The amount of hours they have worked
+    Relation that holds records for each employee with the following fields:
+    - A primary key ID for each employee that is automatically generated
+    - The name of each employee, which must be in Title case and have only
+    letters (upper and lowercase), spaces, and hyphens
+    - Their position in the store, either a server or a manager
 */
 
 CREATE TABLE employee (
     employee_id SERIAL PRIMARY KEY,
-    name VARCHAR(30) 
-        UNIQUE 
+    name VARCHAR(30)
         NOT NULL
         CHECK (name ~ '^[A-Z][A-Za-z \-]'),
     position VARCHAR(50) 
@@ -102,6 +107,15 @@ CREATE TABLE employee (
         ))
 );
 
+/*
+    Relation that holds records for each employee's timesheet with
+    the following fields:
+    - Employee ID that references the employee relation's employee id 
+    field, establishing a one-to-one connection with each employee record 
+    and their respective timesheet
+    - A start timestamp that holds the exact date and time
+    - An end timestamp that holds the exact date and time
+*/
 
 CREATE TABLE employee_timesheet (
     employee_id INT,
@@ -113,13 +127,24 @@ CREATE TABLE employee_timesheet (
 
 
 /*
-    Table which holds the data for each sale that occurs in the shop with:
-    - A primary key ID for the individual sale
-    - The ID of the flavor that was purchased
-    - The quantity of the flavors sold
-    - The ID of the cone that was purchased
-    - The quantity of the cones sold of that flavor
-    - The ID of the employee that served the transaction
+    Relation that holds the record for each sale that occurs in the shop 
+    with the following fields:
+    - A primary key ID for the individual sale that is automatically generated
+    - The ID of the flavor that was purchased that references the flavor relation's
+    flavor_id, establishing a many-to-one connection where one flavor can be sold
+    many times across many different sales
+    - The quantity of the flavors sold, ensuring that at least one scoop is served
+    and no more than three scoops are sold on one cone
+    - The ID of the cone that was purchased that references the cone relation's
+    cone_id, establishing a many-to-one connection where one type can be sold many
+    times across many different sales
+    - The quantity of the cones sold, ensuring that only one cone is sold at a time
+    - The ID of the employee that served the transaction that references the employee
+    relation's employee_id, establishing a many-to-one connection where one employee
+    can serve many different customers
+    - The date and time of the sale to track when sales are being made for later analysis
+    - The cost of each cone's sale summing the total amount for later analysis and 
+    purchase history analysis
 */
 
 
@@ -147,11 +172,11 @@ CREATE TABLE sale (
     FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
 );
 
-
-\COPY flavor_of_ice_cream FROM './data/buckets_of_ice_cream.csv' CSV HEADER;
-\COPY type_of_cone FROM './data/boxes_of_cones.csv' CSV HEADER;
+-- Copy all data from the respective csv files
+\COPY flavor_of_ice_cream FROM './data/flavors_of_ice_cream.csv' CSV HEADER;
+\COPY type_of_cone FROM './data/types_of_cones.csv' CSV HEADER;
 \COPY employee FROM './data/employees.csv' CSV HEADER;
-\COPY employee_timesheet FROM './data/timesheets.csv' CSV HEADER;
+\COPY employee_timesheet FROM './data/employee_timesheets.csv' CSV HEADER;
 \COPY sale FROM './data/sales.csv' CSV HEADER;
 
 
