@@ -20,7 +20,7 @@ DROP TABLE IF EXISTS social_security CASCADE;
 
 
 CREATE TABLE action_figure (
-    id SERIAL PRIMARY KEY,
+    action_figure_id SERIAL PRIMARY KEY,
     action_figure_title VARCHAR(50) 
         UNIQUE 
         NOT NULL
@@ -46,7 +46,7 @@ COMMENT ON TABLE action_figure IS
 
 
 CREATE TABLE employee (
-    id SERIAL PRIMARY KEY,
+    employee_id SERIAL PRIMARY KEY,
     employee_name VARCHAR(30)
         NOT NULL
         CHECK (employee_name ~ '^[A-Z][A-Za-z ]+$'),
@@ -99,7 +99,7 @@ COMMENT ON TABLE gaming_engine IS
 
 
 CREATE TABLE game (
-    id SERIAL PRIMARY KEY,
+    game_id SERIAL PRIMARY KEY,
     engine_id INT NOT NULL,
     game_title VARCHAR(30) 
         UNIQUE 
@@ -146,10 +146,10 @@ COMMENT ON TABLE genre IS
 
 
 CREATE TABLE genre_game (
-    id SERIAL PRIMARY KEY,
+    genre_game_id SERIAL PRIMARY KEY,
     game_id INT NOT NULL,
     genre_id INT NOT NULL,
-    FOREIGN KEY (game_id) REFERENCES game(id),
+    FOREIGN KEY (game_id) REFERENCES game(game_id),
     FOREIGN KEY (genre_id) REFERENCES genre(genre_id)
 );
 
@@ -163,7 +163,7 @@ COMMENT ON TABLE genre_game IS
 
 
 CREATE TABLE poster (
-    id SERIAL PRIMARY KEY,
+    poster_id SERIAL PRIMARY KEY,
     poster_title VARCHAR(30) 
         UNIQUE 
         NOT NULL
@@ -190,11 +190,11 @@ COMMENT ON TABLE poster IS
 
 
 CREATE TABLE shift (
-    id SERIAL PRIMARY KEY,
+    shift_id SERIAL PRIMARY KEY,
     start_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NOT NULL,
     employee_id INT NOT NULL,
-    FOREIGN KEY (employee_id) REFERENCES employee(id)
+    FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
 );
 
 COMMENT ON TABLE shift IS 
@@ -207,13 +207,13 @@ COMMENT ON TABLE shift IS
 
 
 CREATE TABLE social_security (
-    id SERIAL PRIMARY KEY,
+    social_security_id SERIAL PRIMARY KEY,
     employee_id INT NOT NULL,
     ssn VARCHAR(11) 
         UNIQUE
         NOT NULL
         CHECK (ssn ~ '^\d{3}-\d{2}-\d{4}$'),
-    FOREIGN KEY (employee_id) REFERENCES employee(id)
+    FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
 );
 
 COMMENT ON TABLE social_security IS 
