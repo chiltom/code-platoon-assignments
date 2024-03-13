@@ -3,6 +3,7 @@ BEGIN;
 
 DROP TABLE IF EXISTS flavor_of_ice_cream CASCADE;
 DROP TABLE IF EXISTS type_of_cone CASCADE;
+DROP TABLE IF EXISTS store CASCADE;
 DROP TABLE IF EXISTS employee CASCADE;
 DROP TABLE IF EXISTS customer CASCADE;
 DROP TABLE IF EXISTS employee_timesheet CASCADE;
@@ -85,6 +86,33 @@ COMMENT ON TABLE type_of_cone IS
     - The price per cone that the store will charge the customer';
 
 
+CREATE TABLE store (
+    store_id SERIAL PRIMARY KEY,
+    street VARCHAR(40)
+        NOT NULL
+        CHECK (street ~ '^[A-Za-z0-9 \-.]+$'),
+    city VARCHAR(20)
+        NOT NULL
+        CHECK (city ~ '^[A-Z][A-Za-z /-]+$'),
+    state CHAR(2)
+        NOT NULL
+        CHECK (state ~ '^[A-Z][A-Z]'),
+    zip_code INT
+        NOT NULL
+);
+
+COMMENT ON TABLE store IS 
+    'Relation that holds records of each store with the following fields:
+    - A primary key ID that is automatically generated for each store
+    - A street name with a check constraint to ensure that the street name
+    is formatted correctly
+    - The city name with a check constraint to ensure that it is formatted
+    correctly
+    - The state abbreviation with a check constraint to ensure that it is
+    formatted correctly
+    - The zip code';
+
+
 CREATE TABLE employee (
     employee_id SERIAL PRIMARY KEY,
     name VARCHAR(30)
@@ -95,7 +123,11 @@ CREATE TABLE employee (
         CHECK (position IN (
             'Server',
             'Manager'
-        ))
+        )),
+    store_id INT
+        NOT NULL,
+    
+    FOREIGN KEY (store_id) REFERENCES store(store_id)
 );
 
 COMMENT ON TABLE employee IS
@@ -158,6 +190,8 @@ CREATE TABLE sale (
         NOT NULL,
     employee_id INT 
         NOT NULL,
+    store_id INT
+        NOT NULL,
     time_of_sale TIMESTAMP 
         NOT NULL,
     cost_of_sale DECIMAL(4,2) 
@@ -166,7 +200,8 @@ CREATE TABLE sale (
     FOREIGN KEY (flavor_id) REFERENCES flavor_of_ice_cream(flavor_id),
     FOREIGN KEY (cone_id) REFERENCES type_of_cone(cone_id),
     FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
-    FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
+    FOREIGN KEY (employee_id) REFERENCES employee(employee_id),
+    FOREIGN KEY (store_id) REFERENCES store(store_id)
 );
 
 COMMENT ON TABLE sale IS 
@@ -186,6 +221,9 @@ COMMENT ON TABLE sale IS
     - The ID of the employee that served the transaction that references the employee
     relation employee_id, establishing a many-to-one connection where one employee
     can serve many different customers
+    - The ID of the store the transaction was made at that references the store relation
+    ID, establishing a many-to-one connection where one location can have many different
+    purchases
     - The date and time of the sale to track when sales are being made for later analysis
     - The cost of each cone sale summing the total amount for later analysis and 
     purchase history analysis';
@@ -193,6 +231,7 @@ COMMENT ON TABLE sale IS
 
 \COPY flavor_of_ice_cream FROM './data/flavors_of_ice_cream.csv' CSV HEADER;
 \COPY type_of_cone FROM './data/types_of_cones.csv' CSV HEADER;
+\COPY store FROM './data/stores.csv' CSV HEADER;
 \COPY employee FROM './data/employees.csv' CSV HEADER;
 \COPY customer FROM './data/customers.csv' CSV HEADER;
 \COPY employee_timesheet FROM './data/employee_timesheets.csv' CSV HEADER;

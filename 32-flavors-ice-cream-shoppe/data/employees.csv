@@ -1,5 +1,10 @@
-id,name,position
-1,Jerry Rice,Server
-2,Mike Tomlinson,Manager
-3,Ceedee Lamb,Server
-4,Tony Hawk,Server
+id,name,position,store_id
+1,Jerry Rice,Server,1
+2,Mike Tomlinson,Manager,1
+3,Ceedee Lamb,Server,1
+4,Tony Hawk,Manager,2
+5,Andrew,Server,2
+6,Makhi,Server,2
+7,Ethan,Manager,3
+8,Aaron,Server,3
+9,Luke,Server,3
