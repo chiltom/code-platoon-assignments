@@ -33,12 +33,15 @@ CREATE TABLE action_figure (
         CHECK (price >= 10.00 AND price <= 100.00)
 );
 
+CREATE INDEX action_figure_title_idx ON action_figure (action_figure_title);
+
 COMMENT ON TABLE action_figure IS 
     'Relation that holds records of each action figure with: 
     - An id that automatically generates as a primary key
     - The title of the item with a unique constraint and a check 
     constraint to ensure the name is in Title case and only has 
-    letters, integers, spaces, and hyphens 
+    letters, integers, spaces, and hyphens. The title also has an
+    index created on it for faster querying purposes.
     -The quantity in stock with a check constraint ensuring there 
     is always at least one and no more than 30 
     - The price with a check constraint ensuring that the price is
@@ -69,14 +72,20 @@ CREATE TABLE employee (
         CHECK (salary / 2080 > 16.66 AND salary / 2080 < 31.25)
 );
 
+CREATE INDEX employee_name_idx ON employee (employee_name);
+CREATE INDEX position_idx ON employee (position);
+
 COMMENT ON TABLE employee IS 
     'Relation that holds records of each employee with:
     - An id that automatically generates as a primary key
     - The employee name with a check constraint to ensure
     that it is in title case and includes only letters and
-    spaces
+    spaces. The name also has an index created on it for faster
+    querying purposes
     - The employee position with a check constraint to ensure
-    that it is one of the positions that the company offers
+    that it is one of the positions that the company offers. The
+    position field also has an index created on it for faster
+    querying purposes
     - The employee salary with a check constraint ensuring
     that the employee does not make less than 16.66 an hour
     but no more than 31.25 an hour.';
@@ -115,12 +124,15 @@ CREATE TABLE game (
     FOREIGN KEY (engine_id) REFERENCES gaming_engine(engine_id)
 );
 
+CREATE INDEX game_title_idx ON game (game_title);
+
 COMMENT ON TABLE game IS 
     'Relation that holds records of each game with:
     - An id that is automatically generated as the primary key
     - The title of the game with a unique constraint and a
     check constraint ensuring that it is in title case and has
-    only letters, integers, spaces, and hyphens
+    only letters, integers, spaces, and hyphens. The title also
+    has an index created on it for faster querying purposes
     - The quantity of the games in stock with a check constraint
     to ensure that at least one game is always in stock but no more
     than fifty at a time are sitting in the store
@@ -176,12 +188,15 @@ CREATE TABLE poster (
         CHECK (price >= 6.00 AND price <= 20.00)
 );
 
+CREATE INDEX poster_title_idx ON poster (poster_title);
+
 COMMENT ON TABLE poster IS 
     'Relation that holds records of each poster with:
     - An id that is automatically generated as the primary key
     - A poster title with a unique constraint and a check constraint
     to ensure that it is in title case and it only contains letters,
-    integers, spaces, and hyphens
+    integers, spaces, and hyphens. The title also has an index created
+    on it for faster querying purposes
     - The quantity with a check constraint ensuring that there is
     always at least one poster and no more than thirty sitting
     - The price of each poster with a check constraint to ensure that
