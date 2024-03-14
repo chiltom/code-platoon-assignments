@@ -124,10 +124,8 @@ CREATE TABLE employee (
             'Server',
             'Manager'
         )),
-    store_id INT
-        NOT NULL,
-    
-    FOREIGN KEY (store_id) REFERENCES store(store_id)
+    salary DECIMAL(7,2) 
+        NOT NULL
 );
 
 COMMENT ON TABLE employee IS
@@ -157,11 +155,14 @@ COMMENT ON TABLE customer IS
 
 
 CREATE TABLE employee_timesheet (
+    timesheet_id SERIAL PRIMARY KEY,
     employee_id INT,
-    start_time TIMESTAMP NOT NULL,
-    end_time TIMESTAMP NOT NULL,
+    store_id INT,
+    hours INT 
+        NOT NULL,
 
-    FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
+    FOREIGN KEY (employee_id) REFERENCES employee(employee_id),
+    FOREIGN KEY (store_id) REFERENCES store(store_id)
 );
 
 COMMENT ON TABLE employee_timesheet IS
