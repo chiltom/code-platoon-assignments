@@ -1,0 +1,13 @@
+[
+{
+  "model": "pets_and_owners_app.dog",
+  "pk": 1,
+  "fields": {
+    "name": "Oliver",
+    "age": 7,
+    "vaccinated": true,
+    "description": "",
+    "species": "Chihuahua"
+  }
+}
+]

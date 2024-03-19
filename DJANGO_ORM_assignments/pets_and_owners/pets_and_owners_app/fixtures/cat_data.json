@@ -1,0 +1,24 @@
+[
+{
+  "model": "pets_and_owners_app.cat",
+  "pk": 1,
+  "fields": {
+    "breed": "Orange",
+    "age": 3,
+    "vaccinated": true,
+    "description": "Very loving and playful",
+    "name": "Jax"
+  }
+},
+{
+  "model": "pets_and_owners_app.cat",
+  "pk": 2,
+  "fields": {
+    "breed": "gray",
+    "age": 3,
+    "vaccinated": true,
+    "description": "Tempermental",
+    "name": "Nilla"
+  }
+}
+]
