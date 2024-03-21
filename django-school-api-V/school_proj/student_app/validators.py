@@ -4,7 +4,7 @@ import re
 
 def validate_name_format(name: str) -> str:
     error_message = 'Name must be in the format "First Middle Initial. Last"'
-    regex = r'^([A-Z][a-z]+)\s([A-Z][.]+)\s([A-Z][a-z]+)$'
+    regex = r'^([A-Z][a-z]+) ([A-Z][.]+) ([A-Z][a-z]+)$'
     good_name = re.match(regex, name)
     if good_name:
         return name

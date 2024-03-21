@@ -9,7 +9,8 @@ class StudentSerializer(ModelSerializer):
 
 
 class StudentAllSerializer(ModelSerializer):
+
     class Meta:
         model = Student
         fields = ['name', 'student_email', 'personal_email',
-                  'locker_number', 'locker_combination', 'good_student']
+                  'locker_number', 'locker_combination', 'good_student', 'subjects']
