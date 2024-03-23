@@ -1,6 +1,7 @@
 from django.db import models
 from django.core import validators as v
 from .validators import *
+from subject_app.models import Subject
 
 # Create your models here.
 
@@ -16,6 +17,7 @@ class Student(models.Model):
     locker_combination = models.CharField(
         default="12-12-12", max_length=10, validators=[validate_combination_format])
     good_student = models.BooleanField(default=True)
+    subjects = models.ManyToManyField(Subject, related_name="students")
 
     def __str__(self) -> str:
         return f"{self.name} - {self.student_email} - {self.locker_number}"
@@ -25,3 +27,17 @@ class Student(models.Model):
 
     def student_status(self, new: bool) -> None:
         self.good_student = new
+
+    def add_subject(self, subject_id: int) -> None:
+        error_message = 'This students class schedule is full!'
+        if self.subjects.count() > 7:
+            raise Exception(error_message)
+        else:
+            self.subjects.add(subject_id)
+
+    def remove_subject(self, subject_id: int) -> None:
+        error_message = 'This students class schedule is empty!'
+        if self.subjects.count() < 1:
+            raise Exception(error_message)
+        else:
+            self.subjects.remove(subject_id)
