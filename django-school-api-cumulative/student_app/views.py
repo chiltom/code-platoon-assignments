@@ -11,3 +11,9 @@ class All_students(APIView):
     def get(self, request):
         students = StudentAllSerializer(get_list_or_404(Student), many=True)
         return Response(students.data)
+
+
+class A_student(APIView):
+    def get(self, request, id):
+        student = StudentAllSerializer(get_object_or_404(Student, id=id))
+        return Response(student.data)
