@@ -23,6 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 env = dotenv_values(".env")
 SECRET_KEY = env.get("DJANGO_SECRET_KEY")
+GNEWS_API_KEY = env.get("GNEWS_API_KEY")
+OPEN_WX_KEY = env.get("OPEN_WX_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
