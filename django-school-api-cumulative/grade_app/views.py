@@ -22,10 +22,7 @@ class All_grades(APIView):
 
     def post(self, request):
         data = request.data.copy()
-        stud = StudentAllSerializer(
-            get_object_or_404(Student, id=data.student))
-        subj = SubjectSerializer(get_object_or_404(Subject, id=data.a_subject))
-        new_grade = GradeSerializer(Grade(a_subject=subj, student=stud))
+        new_grade = GradeSerializer(data=data)
         if new_grade.is_valid():
             new_grade.save()
             return Response(new_grade.data, status=HTTP_201_CREATED)

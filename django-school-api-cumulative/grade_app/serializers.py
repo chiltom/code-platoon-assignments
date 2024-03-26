@@ -5,9 +5,6 @@ from .models import Grade
 
 
 class GradeSerializer(ModelSerializer):
-    a_subject = SubjectSerializer(read_only=True)
-    student = StudentAllSerializer(read_only=True)
-
     class Meta:
         model = Grade
         fields = "__all__"
