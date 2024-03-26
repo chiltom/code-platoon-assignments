@@ -28,7 +28,7 @@ class A_subject(APIView):
         ser_subj = SubjectSerializer(subj, data=vars(subj))
         if ser_subj.is_valid():
             ser_subj.save()
-            return Response(ser_subj, status=HTTP_200_OK)
+            return Response(ser_subj.data, status=HTTP_200_OK)
         else:
             print(ser_subj.errors)
             return Response(ser_subj.errors, HTTP_400_BAD_REQUEST)
