@@ -1,7 +1,6 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from .models import Student
 from subject_app.serializers import SubjectSerializer
-import json
 
 
 class StudentSerializer(ModelSerializer):

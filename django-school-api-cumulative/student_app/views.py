@@ -23,7 +23,7 @@ class All_students(APIView):
 
     def get(self, request):
         students = StudentAllSerializer(get_list_or_404(Student), many=True)
-        return Response(students.data)
+        return Response(students.data, status=HTTP_200_OK)
 
     def post(self, request):
         data = request.data.copy()
@@ -45,7 +45,7 @@ class A_student(APIView):
 
     def get(self, request, id):
         student = StudentAllSerializer(get_object_or_404(Student, id=id))
-        return Response(student.data)
+        return Response(student.data, status=HTTP_200_OK)
 
     def put(self, request, id):
         data = request.data.copy()

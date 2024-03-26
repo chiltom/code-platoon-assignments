@@ -6,7 +6,7 @@ from student_app.models import Subject, Student
 
 
 class Grade(models.Model):
-    grade = models.DecimalField(max_digits=5, decimal_places=2, default=100, validators=[
+    grade = models.DecimalField(max_digits=5, decimal_places=2, default=100.00, validators=[
                                 v.MinValueValidator(0.00), v.MaxValueValidator(100.00)])
     a_subject = models.ForeignKey(
         Subject, on_delete=models.SET_NULL, blank=True, null=True, related_name="grades")
