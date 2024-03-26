@@ -49,3 +49,8 @@ class A_grade(APIView):
         else:
             print(ser_grade.errors)
             return Response(ser_grade.errors, status=HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, id):
+        grade = get_object_or_404(Grade, id=id)
+        grade.delete()
+        return Response(status=HTTP_204_NO_CONTENT)
