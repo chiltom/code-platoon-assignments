@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.status import (
     HTTP_200_OK,
     HTTP_201_CREATED,
+    HTTP_204_NO_CONTENT,
     HTTP_400_BAD_REQUEST
 )
 from django.shortcuts import get_object_or_404, get_list_or_404
@@ -45,3 +46,8 @@ class A_subject(APIView):
         else:
             print(ser_subj.errors)
             return Response(ser_subj.errors, HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, subject):
+        subj = get_object_or_404(Subject, subject_name=subject.title())
+        subj.delete()
+        return Response(status=HTTP_204_NO_CONTENT)
