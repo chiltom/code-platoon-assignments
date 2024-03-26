@@ -62,3 +62,8 @@ class A_student(APIView):
         else:
             print(ser_student.errors)
             return Response(ser_student.errors, status=HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, id):
+        student = get_object_or_404(Student, id=id)
+        student.delete()
+        return Response(status=HTTP_204_NO_CONTENT)
