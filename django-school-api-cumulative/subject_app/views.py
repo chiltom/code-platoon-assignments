@@ -20,11 +20,12 @@ class A_subject(APIView):
         return Response(subject.data)
 
     def put(self, request, subject):
+        data = request.data.copy()
         subj = get_object_or_404(Subject, subject_name=subject.title())
-        if "subject_name" in request.data and request.data.get("subject_name"):
-            subj.subject_name = request.data.get("subject_name")
-        if "professor" in request.data and request.data.get("professor"):
-            subj.professor = request.data.get("professor")
+        if "subject_name" in data and data.get("subject_name"):
+            subj.subject_name = data.get("subject_name")
+        if "professor" in data and data.get("professor"):
+            subj.professor = data.get("professor")
         ser_subj = SubjectSerializer(subj, data=vars(subj))
         if ser_subj.is_valid():
             ser_subj.save()
