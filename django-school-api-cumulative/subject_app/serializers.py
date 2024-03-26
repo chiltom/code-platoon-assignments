@@ -14,5 +14,8 @@ class SubjectSerializer(ModelSerializer):
         return instance.students.count()
 
     def get_grade_average(self, instance):
-        grades = instance.grades.all()
-        return round(sum([x.grade for x in grades])/len(grades), 2)
+        if instance.grades.all().count() > 0:
+            grades = instance.grades.all()
+            return round(sum([x.grade for x in grades])/len(grades), 2)
+        else:
+            return 0
