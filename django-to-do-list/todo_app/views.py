@@ -51,3 +51,8 @@ class A_list(APIView):
             return Response(ser_list.data, status=HTTP_200_OK)
         else:
             return Response(ser_list.errors, status=HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, id):
+        list = get_object_or_404(List, id=id)
+        list.delete()
+        return Response(status=HTTP_204_NO_CONTENT)
