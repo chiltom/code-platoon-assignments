@@ -26,3 +26,28 @@ class All_lists(APIView):
             return Response(new_list.data, status=HTTP_201_CREATED)
         else:
             return Response(new_list.errors, status=HTTP_400_BAD_REQUEST)
+
+
+class A_list(APIView):
+    def add_tasks(self, list, lst_of_task_ids):
+        for task_id in lst_of_task_ids:
+            if get_object_or_404(Task, id=task_id):
+                list.tasks.add(task_id)
+                list.save()
+
+    def get(self, request, id):
+        list = ListSerializer(get_object_or_404(List, id=id))
+        return Response(list.data, status=HTTP_200_OK)
+
+    def put(self, request, id):
+        data = request.data.copy()
+        list = get_object_or_404(List, id=id)
+        ser_list = ListSerializer(list, data=data, partial=True)
+        if ser_list.is_valid():
+            ser_list.save()
+            if data.get("lst_of_tasks"):
+                self.add_tasks(
+                    list=list, lst_of_task_ids=data.get("lst_of_tasks"))
+            return Response(ser_list.data, status=HTTP_200_OK)
+        else:
+            return Response(ser_list.errors, status=HTTP_400_BAD_REQUEST)
