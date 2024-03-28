@@ -26,7 +26,8 @@ class Task(models.Model):
 class Sub_Task(models.Model):
     sub_task_name = models.CharField(max_length=255)
     completed = models.BooleanField(default=False)
-    parent_task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    parent_task = models.ForeignKey(
+        Task, on_delete=models.CASCADE, related_name="sub_tasks")
 
     def __str__(self) -> str:
         return f"Sub_Task: {self.sub_task_name}"
