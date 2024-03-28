@@ -87,6 +87,8 @@ class A_task(APIView):
         task = TaskSerializer(get_object_or_404(Task, id=task_id))
         return Response(task.data, status=HTTP_200_OK)
 
+    # Figure out the making all of the subtasks complete if the main task is complete
+    # Figure out making parent task complete if all sub tasks are complete
     def put(self, request, id, task_id):
         data = request.data.copy()
         task = get_object_or_404(Task, id=task_id)
@@ -128,6 +130,7 @@ class A_sub_task(APIView):
             get_object_or_404(Sub_Task, id=sub_task_id))
         return Response(sub_task.data, status=HTTP_200_OK)
 
+    # Figure out if parent task is complete and subtask is incomplete making parent task incomplete
     def put(self, request, id, task_id, sub_task_id):
         data = request.data.copy()
         sub_task = get_object_or_404(Sub_Task, id=sub_task_id)
