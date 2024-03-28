@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.status import (
+    HTTP_200_OK,
     HTTP_201_CREATED,
     HTTP_204_NO_CONTENT,
     HTTP_400_BAD_REQUEST,
@@ -29,3 +30,15 @@ class Sign_up(APIView):
             return Response({"user": new_user.email, "token": token.key}, status=HTTP_201_CREATED)
         except ValidationError as e:
             return Response(e.message_dict, status=HTTP_400_BAD_REQUEST)
+
+
+class Login(APIView):
+    def post(self, request):
+        data = request.data.copy()
+        user = authenticate(username=data.get("email"),
+                            password=data.get("password"))
+        if user:
+            token, created = Token.objects.get_or_create(user=user)
+            login(request, user)
+            return Response({"user": user.email, "token": token.key}, status=HTTP_200_OK)
+        return Response("No user matching these credentials", status=HTTP_404_NOT_FOUND)
