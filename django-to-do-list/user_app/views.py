@@ -42,3 +42,12 @@ class Login(APIView):
             login(request, user)
             return Response({"user": user.email, "token": token.key}, status=HTTP_200_OK)
         return Response("No user matching these credentials", status=HTTP_404_NOT_FOUND)
+
+
+class Logout(APIView):
+    def post(self, request):
+        authentication_classes = [TokenAuthentication]
+        permission_classes = [IsAuthenticated]
+        request.user.auth_token.delete()
+        logout(request)
+        return Response(status=HTTP_204_NO_CONTENT)
