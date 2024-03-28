@@ -120,3 +120,10 @@ class All_sub_tasks(APIView):
             return Response(new_sub_task.data, status=HTTP_201_CREATED)
         else:
             return Response(new_sub_task.errors, status=HTTP_400_BAD_REQUEST)
+
+
+class A_sub_task(APIView):
+    def get(self, request, id, task_id, sub_task_id):
+        sub_task = Sub_TaskSerializer(
+            get_object_or_404(Sub_Task, id=sub_task_id))
+        return Response(sub_task.data, status=HTTP_200_OK)
