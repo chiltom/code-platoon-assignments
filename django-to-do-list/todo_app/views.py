@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404, get_list_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import (
@@ -9,17 +10,22 @@ from rest_framework.status import (
 )
 from .models import List, Task, Sub_Task
 from .serializers import ListSerializer, TaskSerializer, Sub_TaskSerializer
-from django.shortcuts import get_object_or_404, get_list_or_404
+from user_app.views import TokenReq
 
 
 # Create your views here.
-class All_lists(APIView):
+class All_lists(TokenReq):
     def get(self, request):
-        lists = ListSerializer(get_list_or_404(List), many=True)
-        return Response(lists.data, status=HTTP_200_OK)
+        try:
+            lists = ListSerializer(
+                request.user.lists.order_by("id"), many=True)
+            return Response(lists.data, status=HTTP_200_OK)
+        except Exception as e:
+            return Response(e, status=HTTP_400_BAD_REQUEST)
 
     def post(self, request):
         data = request.data.copy()
+        data['user'] = request.user.id
         new_list = ListSerializer(data=data)
         if new_list.is_valid():
             new_list.save()
@@ -28,21 +34,23 @@ class All_lists(APIView):
             return Response(new_list.errors, status=HTTP_400_BAD_REQUEST)
 
 
-class A_list(APIView):
+class A_list(TokenReq):
     def add_tasks(self, list, lst_of_task_ids):
         for task_id in lst_of_task_ids:
             if get_object_or_404(Task, id=task_id):
                 list.tasks.add(task_id)
                 list.save()
 
-    def get(self, request, id):
-        list = ListSerializer(get_object_or_404(List, id=id))
-        return Response(list.data, status=HTTP_200_OK)
+    def get_list(self, request, list_id):
+        return get_object_or_404(request.user.lists, id=list_id)
 
-    def put(self, request, id):
+    def get(self, request, list_id):
+        return Response(ListSerializer(self.get_list(request, list_id)).data, status=HTTP_200_OK)
+
+    def put(self, request, list_id):
         data = request.data.copy()
-        list = get_object_or_404(List, id=id)
-        ser_list = ListSerializer(list, data=data, partial=True)
+        curr_list = self.get_list(request, list_id)
+        ser_list = ListSerializer(curr_list, data=data, partial=True)
         if ser_list.is_valid():
             ser_list.save()
             if data.get("lst_of_tasks"):
@@ -52,22 +60,22 @@ class A_list(APIView):
         else:
             return Response(ser_list.errors, status=HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, id):
-        list = get_object_or_404(List, id=id)
-        list.delete()
+    def delete(self, request, list_id):
+        curr_list = self.get_list(request, list_id)
+        curr_list.delete()
         return Response(status=HTTP_204_NO_CONTENT)
 
 
-class All_tasks(APIView):
-    # Fix getting parent list
-    def get(self, request, id):
-        list = get_object_or_404(List, id=id)
-        tasks = TaskSerializer(list.tasks, many=True)
+class All_tasks(TokenReq):
+    def get(self, request, list_id):
+        tasks = TaskSerializer(
+            request.user.lists.get(id=list_id).tasks, many=True)
         return Response(tasks.data, status=HTTP_200_OK)
 
-    def post(self, request, id):
+    def post(self, request, list_id):
         data = request.data.copy()
-        data["parent_list"] = id
+        get_object_or_404(request.user.lists, id=list_id)
+        data["parent_list"] = list_id
         new_task = TaskSerializer(data=data)
         if new_task.is_valid():
             new_task.save()
@@ -76,7 +84,7 @@ class All_tasks(APIView):
             return Response(new_task.errors, status=HTTP_400_BAD_REQUEST)
 
 
-class A_task(APIView):
+class A_task(TokenReq):
     def add_sub_tasks(self, task, lst_of_sub_task_ids):
         for sub_task_id in lst_of_sub_task_ids:
             if get_object_or_404(Sub_Task, id=sub_task_id):
@@ -107,7 +115,7 @@ class A_task(APIView):
         return Response(status=HTTP_204_NO_CONTENT)
 
 
-class All_sub_tasks(APIView):
+class All_sub_tasks(TokenReq):
     def get(self, request, id, task_id):
         task = get_object_or_404(Task, id=task_id)
         sub_tasks = Sub_TaskSerializer(task.sub_tasks, many=True)
@@ -124,7 +132,7 @@ class All_sub_tasks(APIView):
             return Response(new_sub_task.errors, status=HTTP_400_BAD_REQUEST)
 
 
-class A_sub_task(APIView):
+class A_sub_task(TokenReq):
     def get(self, request, id, task_id, sub_task_id):
         sub_task = Sub_TaskSerializer(
             get_object_or_404(Sub_Task, id=sub_task_id))

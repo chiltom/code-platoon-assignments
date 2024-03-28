@@ -17,17 +17,18 @@ from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
 
-class Info(APIView):
+class TokenReq(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
+class Info(TokenReq):
     def get(self, request):
-        authentication_classes = [TokenAuthentication]
-        permission_classes = [IsAuthenticated]
         data = {"email": request.user.email,
                 "age": request.user.age, "address": request.user.address, "display_name": request.user.display_name}
         return Response(data, status=HTTP_200_OK)
 
     def put(self, request):
-        authentication_classes = [TokenAuthentication]
-        permission_classes = [IsAuthenticated]
         data = request.data.copy()
         user = User.objects.get(username=request.user.email)
         if data.get("display_name") and "display_name" in data:
@@ -75,10 +76,8 @@ class Login(APIView):
         return Response("No user matching these credentials", status=HTTP_404_NOT_FOUND)
 
 
-class Logout(APIView):
+class Logout(TokenReq):
     def post(self, request):
-        authentication_classes = [TokenAuthentication]
-        permission_classes = [IsAuthenticated]
         request.user.auth_token.delete()
         logout(request)
         return Response(status=HTTP_204_NO_CONTENT)
