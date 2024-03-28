@@ -17,6 +17,37 @@ from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
 
+class Info(APIView):
+    def get(self, request):
+        authentication_classes = [TokenAuthentication]
+        permission_classes = [IsAuthenticated]
+        data = {"email": request.user.email,
+                "age": request.user.age, "address": request.user.address, "display_name": request.user.display_name}
+        return Response(data, status=HTTP_200_OK)
+
+    def put(self, request):
+        authentication_classes = [TokenAuthentication]
+        permission_classes = [IsAuthenticated]
+        data = request.data.copy()
+        user = User.objects.get(username=request.user.email)
+        if data.get("display_name") and "display_name" in data:
+            user.display_name = data.get("display_name")
+        if data.get("address") and "address" in data:
+            user.address = data.get("address")
+        if data.get("age") and "age" in data:
+            user.age = data.get("age")
+        if data.get("new_password") and "new_password" in data:
+            user.set_password(data.get("new_password"))
+        try:
+            user.full_clean()
+            user.save()
+            user_data = {"email": user.email, "age": user.age,
+                         "address": user.address, "display_name": user.display_name}
+            return Response(user_data, status=HTTP_200_OK)
+        except ValidationError as e:
+            return Response(e.message_dict, status=HTTP_400_BAD_REQUEST)
+
+
 class Sign_up(APIView):
     def post(self, request):
         data = request.data.copy()
