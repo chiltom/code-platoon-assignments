@@ -68,7 +68,6 @@ class All_tasks(APIView):
     def post(self, request, id):
         data = request.data.copy()
         data["parent_list"] = id
-        list = get_object_or_404(List, id=id)
         new_task = TaskSerializer(data=data)
         if new_task.is_valid():
             new_task.save()
@@ -111,3 +110,13 @@ class All_sub_tasks(APIView):
         task = get_object_or_404(Task, id=task_id)
         sub_tasks = Sub_TaskSerializer(task.sub_tasks, many=True)
         return Response(sub_tasks.data, status=HTTP_200_OK)
+
+    def post(self, request, id, task_id):
+        data = request.data.copy()
+        data["parent_task"] = task_id
+        new_sub_task = Sub_TaskSerializer(data=data)
+        if new_sub_task.is_valid():
+            new_sub_task.save()
+            return Response(new_sub_task.data, status=HTTP_201_CREATED)
+        else:
+            return Response(new_sub_task.errors, status=HTTP_400_BAD_REQUEST)
