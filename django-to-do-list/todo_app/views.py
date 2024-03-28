@@ -127,3 +127,13 @@ class A_sub_task(APIView):
         sub_task = Sub_TaskSerializer(
             get_object_or_404(Sub_Task, id=sub_task_id))
         return Response(sub_task.data, status=HTTP_200_OK)
+
+    def put(self, request, id, task_id, sub_task_id):
+        data = request.data.copy()
+        sub_task = get_object_or_404(Sub_Task, id=sub_task_id)
+        ser_sub_task = Sub_TaskSerializer(sub_task, data=data, partial=True)
+        if ser_sub_task.is_valid():
+            ser_sub_task.save()
+            return Response(ser_sub_task.data, status=HTTP_200_OK)
+        else:
+            return Response(ser_sub_task.errors, status=HTTP_400_BAD_REQUEST)
