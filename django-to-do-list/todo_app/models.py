@@ -8,7 +8,7 @@ from user_app.models import User
 class List(models.Model):
     # id linked to tasks by fk, one-to-many relationship
     list_name = models.CharField(max_length=50, unique=True)
-    users = models.ManyToManyField(User, related_name="lists")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return f"List: {self.list_name}"
