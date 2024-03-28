@@ -99,3 +99,8 @@ class A_task(APIView):
             return Response(ser_task.data, status=HTTP_200_OK)
         else:
             return Response(ser_task.errors, status=HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, id, task_id):
+        task = get_object_or_404(Task, id=task_id)
+        task.delete()
+        return Response(status=HTTP_204_NO_CONTENT)
