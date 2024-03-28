@@ -56,3 +56,22 @@ class A_list(APIView):
         list = get_object_or_404(List, id=id)
         list.delete()
         return Response(status=HTTP_204_NO_CONTENT)
+
+
+class All_tasks(APIView):
+    # Fix getting parent list
+    def get(self, request, id):
+        list = get_object_or_404(List, id=id)
+        tasks = TaskSerializer(list.tasks, many=True)
+        return Response(tasks.data, status=HTTP_200_OK)
+
+    def post(self, request, id):
+        data = request.data.copy()
+        data["parent_list"] = id
+        list = get_object_or_404(List, id=id)
+        new_task = TaskSerializer(data=data)
+        if new_task.is_valid():
+            new_task.save()
+            return Response(new_task.data, status=HTTP_201_CREATED)
+        else:
+            return Response(new_task.errors, status=HTTP_400_BAD_REQUEST)
