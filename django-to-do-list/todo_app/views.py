@@ -104,3 +104,10 @@ class A_task(APIView):
         task = get_object_or_404(Task, id=task_id)
         task.delete()
         return Response(status=HTTP_204_NO_CONTENT)
+
+
+class All_sub_tasks(APIView):
+    def get(self, request, id, task_id):
+        task = get_object_or_404(Task, id=task_id)
+        sub_tasks = Sub_TaskSerializer(task.sub_tasks, many=True)
+        return Response(sub_tasks.data, status=HTTP_200_OK)
